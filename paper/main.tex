@@ -143,13 +143,11 @@ in which restoration leaves the smoothest residual.
 
 \subsection{What is missing}
 
-Benchmarks for generated-image detection supply real and fake images but treat
-restoration, if at all, as an augmentation to be applied to the fake class
-\cite{zhu2023genimage}. That choice encodes the binary assumption. If restoration is
-applied only to generated images, a detector can learn ``restored means fake'' and
-score well without ever having seen a restored photograph. The evaluation we need is
-the opposite one: restoration applied to authentic images, with the restored copy
-kept tied to its source.
+Benchmarks supply real and fake images and often test generic degradation
+\cite{zhu2023genimage}; recent transformation-based detectors use restoration
+as a probe for binary detection. We instead ask what happens when an authentic
+photograph itself passes through a learned restorer, keeping the copy tied to
+its source and measuring false flags by released binary detectors.
 
 \section{Method}
 
