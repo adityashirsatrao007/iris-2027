@@ -15,8 +15,9 @@
 \title{Original, Restored, or Generated:\\Restoration as an Unmodelled Provenance State}
 \titlerunning{Original, Restored, or Generated}
 
-\author{Aditya}
-\institute{Independent researcher}
+\author{Aditya Vishal Shirsatrao\inst{1}\thanks{Corresponding author: adityashirsatrao007@gmail.com}}
+\institute{N. K. Orchid College of Engineering \& Technology, Solapur, India
+\email{adityashirsatrao007@gmail.com}}
 
 \maketitle
 
@@ -305,23 +306,6 @@ reported to be ``99\% accurate'' on a balanced binary benchmark says very little
 about how it behaves on an authentic image that has been through a denoiser, because
 that case does not appear in the benchmark.
 
-\subsection{Binary contrasts}
-
-Reducing the three-class problem to two-class comparisons isolates the two
-mechanisms, which have different causes.
-
-\begin{itemize}
-\item \emph{original vs.\ generated}: AUROC 0.998 at 224\,px (0.997 at 128\,px).
-Different content sources, and separable almost perfectly.
-\item \emph{original vs.\ restored}: AUROC 0.889 at 224\,px (0.810 at 128\,px). Same
-photographs, differing only by the restorer, and notably harder.
-\end{itemize}
-
-The second number is the one we consider informative. The restoration operator is
-detectable from its own source photograph, but it is a weaker signal than the
-difference between a photograph and a synthesised image. Restoration therefore
-neither erases provenance nor replaces it with an unmistakable signature.
-
 \subsection{False-generated rate}
 \label{sec:fpr}
 
@@ -375,7 +359,7 @@ without naming the model, the threshold, and the restorer.
 
 We hold out one generator family entirely and train a binary real-versus-generated
 classifier on the remaining three families plus authentic images.
-Fig.~\ref{fig:unseen} and Table~\ref{tab:unseen} give the result.
+Table~\ref{tab:unseen} gives the result.
 
 \begin{table}[t]
 \centering
@@ -395,14 +379,6 @@ Mean AUROC & & 0.978 \\
 \end{tabular}
 \end{table}
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.5\textwidth]{figures/fig_unseen_generator.png}
-\caption{Transfer to an unseen generator family. GLIDE is the outlier, and a single
-averaged transfer number would hide it.}
-\label{fig:unseen}
-\end{figure}
-
 The mean of 0.978 is high, but the variance is the point. Two families transfer
 above 0.998 and one drops to 0.932, a gap of six to seven accuracy points. GLIDE is
 a text-guided diffusion model whose outputs differ in composition and texture
@@ -410,65 +386,6 @@ statistics from the GAN and quantised-diffusion families, and its lower transfer
 matches the known difficulty of cross-family diffusion detection
 \cite{corvi2023diffusion,ojha2023univfd}. Reporting the mean alone would present a
 homogeneous capability that does not exist.
-
-\subsection{Calibration}
-
-Fig.~\ref{fig:cal} shows the reliability diagram at 224\,px. The model is
-under-confident in the mid range and slightly over-confident at the top, with ECE
-0.073. This matters operationally: a threshold chosen on a well-calibrated score
-transfers between conditions, while one chosen on an over-confident score does not.
-The improvement from ECE 0.141 at 128\,px to 0.073 at 224\,px is consistent with the
-accuracy gain and suggests that the matched-resolution setting is not only less
-accurate but less trustworthy per unit of confidence.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.42\textwidth]{figures/fig_reliability.png}
-\caption{Reliability diagram at $224\times224$; ECE 0.073.}
-\label{fig:cal}
-\end{figure}
-
-\section{Discussion}
-
-\subsection{Restoration is a provenance state, not a nuisance transform}
-
-The usual way to handle a distribution shift is to augment the training set with the
-shifted data and keep the binary label. Applied here, that means training a detector
-on restored fakes, or on restored reals labelled real. Both choices are wrong for the
-question a verifier actually asks. A restored photograph is not a fake with an
-augmentation applied; it is a photograph whose pixel-generation history includes a
-network. Collapsing that into ``real'' discards the fact a downstream user may care
-about, and collapsing it into ``fake'' is simply false.
-
-Treating restoration as a third class has a concrete benefit visible in
-Table~\ref{tab:perclass}: the errors become \emph{interpretable}. A binary detector
-that mislabels a restored photograph produces a false accusation. A three-class model
-that confuses original with restored produces a provenance downgrade, which is a
-different and much less harmful error. Designing the label space around the decision
-being made, rather than around the data that happens to be available, converts an
-alarming failure into a benign one.
-
-\subsection{Why the negative result is useful}
-
-It would be convenient if restoration reliably poisoned detectors, because then a
-single experiment would settle the question and a single mitigation would fix it. Our
-measurements say otherwise. A generic probe is barely affected, and the effect
-reverses sign relative to the alarm. Since the published inflation figures come from
-specific forensic detectors, the honest reading is that restoration sensitivity is a
-per-model property, like robustness to JPEG or to resizing. That reframes the
-engineering problem: instead of asking whether restoration is dangerous in general,
-one should measure the false-positive rate of the detector one intends to deploy, on
-restored authentic images, at the threshold one intends to use. Our harness is built
-to make that measurement cheap.
-
-\subsection{Practical recommendation}
-
-Report the false-positive rate on authentic images in three conditions --- pristine,
-restored by the operator in the deployment path, and restored by an operator outside
-it --- and report it at the deployed threshold, not at 0.5 by default. Where
-restoration is possible, prefer a provenance model with an explicit restored class
-over a binary one, and treat original/restored confusion as the expected error mode
-rather than a bug.
 
 \section{Threats to Validity}
 \label{sec:threats}
@@ -487,9 +404,8 @@ this paper reproduces, confirms, or refutes a published false-positive rate, and
 should be cited as if it did. Our negative result is about our own probe.
 
 \paragraph{One restorer per family.} Real-ESRGAN is the only super-resolution
-operator and Restormer the only denoiser. Leave-one-restorer-out transfer, reported
-in Section~\ref{sec:restormer}, covers the unseen-operator case but cannot establish
-generality across the restoration literature.
+operator and Restormer the only denoiser. We did not complete leave-one-restorer-out
+transfer, so the results cannot establish generality across the restoration literature.
 
 \paragraph{Resolution ceiling.} GenImage is 128\,px, so the matched comparison is at
 128\,px and the standard comparison upsamples generated images by 1.75$\times$. Part

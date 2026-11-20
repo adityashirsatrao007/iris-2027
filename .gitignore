@@ -17,3 +17,4 @@ paper/*.fdb_latexmk
 paper/*.fls
 paper/*.log
 tools/colab/target.json
+!paper/main.bbl
