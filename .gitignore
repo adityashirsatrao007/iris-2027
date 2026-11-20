@@ -4,6 +4,8 @@ __pycache__/
 .venv-cuda/
 data/raw/
 data/downloads/
+data/genimage_same_benchmark/
+data/raw/postprocessed/
 data/models/
 data/weights/
 results/
