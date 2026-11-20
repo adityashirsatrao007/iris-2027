@@ -19,6 +19,17 @@ reports Wilson intervals for FPR at 1%, 5%, 10%, and 50%, plus a paired
 bootstrap interval for the mean score change. This prevents a single
 threshold from hiding operating-point dependence.
 
+For the paper-ready detector statistics and figures, run:
+
+```powershell
+python scripts/make_publication_metrics.py
+```
+
+This writes `results/publication_metrics.json` and produces one-vs-rest ROC,
+paired detector-delta, and threshold-delta figures under `paper/figures/`.
+The paired statistics are calculated over source images; restorations are not
+treated as independent samples.
+
 ## Same-benchmark control run
 
 To address part of the primary content confound, create a balanced GenImage

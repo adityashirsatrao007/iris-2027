@@ -90,7 +90,7 @@ opposite sides of the train/test boundary. Across three seeds, three-class
 accuracy is 86.66$\pm$1.45\% with macro-AUROC 0.956$\pm$0.004 at 224\,px and
 82.29\% with macro-AUROC 0.926 at 128\,px.
 \item We localise the difficulty. Nearly all errors are original--restored
-confusions (79 of 468 authentic test images), whereas generated images are
+confusions (81 of 468 authentic test images), whereas generated images are
 separated almost perfectly (99.25\% recall). Restoration is detectable against its
 own source photograph, but only at AUROC 0.889, far below the near-perfect
 separation of generated content.
@@ -237,12 +237,11 @@ the other.
 
 \subsection{Implementation}
 
-All experiments run on CPU (AMD64, no CUDA device) with PyTorch
-\cite{paszke2019pytorch}. Feature extraction for 3{,}000 images takes about ten
-minutes per resolution; the logistic-regression head converges in seconds. Restoring
-1{,}000 authentic images takes roughly 30 minutes with Real-ESRGAN and one hour with
-Restormer. Seeds are fixed, and every number in this paper is written by the harness
-from saved prediction files rather than typed by hand.
+The final restoration and official-detector experiments run on CUDA with an NVIDIA
+GeForce GTX 1650 Ti; the frozen-probe sensitivity runs use the same CUDA-capable
+environment with PyTorch \cite{paszke2019pytorch}. Seeds are fixed, and every number
+in this paper is written by the harness from saved prediction files rather than typed
+by hand.
 
 \section{Results}
 
@@ -268,11 +267,19 @@ $224\times224$ (3 seeds) & \best{86.66\%} & \best{86.39\%} & \best{86.42\%} & \b
 Two effects are visible. First, the matched setting is harder by roughly four
 accuracy points, which is expected: at 128\,px the restoration residual is a smaller
 fraction of the signal. Second, calibration improves sharply with resolution, with
-ECE falling from 0.141 to 0.073. Both settings are far above the 33.3\% chance level,
+ECE falling from 0.141 to 0.076. Both settings are far above the 33.3\% chance level,
 so provenance is recoverable in the three-class formulation.
 
 Table~\ref{tab:perclass} shows where the errors are, and Fig.~\ref{fig:cm} shows the
 same information as a matrix.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.56\textwidth]{figures/fig_probe_roc.png}
+\caption{One-vs-rest ROC curves for the 224-pixel probe. The generated class is
+easier to separate than the original/restored provenance states.}
+\label{fig:probe_roc}
+\end{figure}
 
 \begin{table}[t]
 \centering
@@ -282,8 +289,8 @@ same information as a matrix.
 \toprule
 Class & $n$ & Recall & 95\% CI \\
 \midrule
-original  & 234 & 81.62\% & [76.50, 86.32] \\
-restored  & 234 & 82.48\% & [77.35, 86.75] \\
+original  & 234 & 80.77\% & [75.64, 85.47] \\
+restored  & 234 & 82.48\% & [77.35, 87.18] \\
 generated & 266 & \best{99.25\%} & [98.12, 100.00] \\
 \bottomrule
 \end{tabular}
@@ -374,6 +381,43 @@ UnivFD, Restormer & 0.60\% & 1.60\% \\
 The official runs do not reproduce the abstract's 15.90\% super-resolution or
 5.20\% denoising rates. UnivFD rises from 0.60\% to 1.60\% for both restorers;
 CNNSpot's released variants range from decreases to a 1.20\%--1.70\% rate.
+
+Figure~\ref{fig:detector_delta} shows the paired score changes rather than only
+the thresholded rates. The intervals include zero for the two CNNSpot 0.5 audits,
+whereas the UnivFD changes are positive on this corpus. This distinction matters:
+a threshold crossing count alone cannot describe the magnitude or uncertainty of
+the detector response.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.92\textwidth]{figures/fig_detector_delta.png}
+\caption{Paired mean change in synthetic probability after restoration. Error bars
+are 95\% paired bootstrap intervals over source images. Positive values indicate
+that the restored image receives a higher synthetic score.}
+\label{fig:detector_delta}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.82\textwidth]{figures/fig_detector_threshold_delta.png}
+\caption{Change in the flagged rate over decision thresholds for the primary
+detector/restorer audits. The zero line indicates no change from original to
+restored.}
+\label{fig:detector_threshold}
+\end{figure}
+
+\subsection{Same-benchmark control}
+
+To test the source-distribution confound, we constructed a separate balanced
+control from the GenImage BigGAN test benchmark: 500 real images, their 500
+Real-ESRGAN restorations, and 500 generated images. The public release does not
+provide a reliable exact real/fake source-pair identifier, so this is a
+same-benchmark control rather than a pixel-matched benchmark. The probe achieved
+78.57\% accuracy, 78.87\% balanced accuracy, macro-F1 78.85\%, macro-AUROC
+0.900, and ECE 0.131. Generated recall was 97.54\%; original and restored recall
+were 62.50\% and 76.56\%, respectively. The lower result than the primary
+COCO/GenImage experiment confirms that source-distribution differences inflated
+the original generated-class separation.
 
 \subsection{Generalisation to an unseen generator family}
 

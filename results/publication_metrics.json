@@ -1,0 +1,538 @@
+{
+  "seed": 2027,
+  "detectors": {
+    "results\\cnnspot_official.csv": {
+      "n": 1000,
+      "mean_original": 0.003676343441203053,
+      "mean_restored": 0.003151614015247229,
+      "mean_delta": -0.0005247294259558248,
+      "mean_delta_bootstrap_95": [
+        -0.003150309385806633,
+        0.0024127926916407603
+      ],
+      "median_delta": 7.823822683359574e-18,
+      "increased": 558,
+      "decreased": 442,
+      "unchanged": 0,
+      "thresholds": {
+        "0.01": {
+          "original_rate": 0.015,
+          "restored_rate": 0.018,
+          "paired_increase": 7,
+          "paired_decrease": 4
+        },
+        "0.05": {
+          "original_rate": 0.008,
+          "restored_rate": 0.009,
+          "paired_increase": 4,
+          "paired_decrease": 3
+        },
+        "0.1": {
+          "original_rate": 0.005,
+          "restored_rate": 0.007,
+          "paired_increase": 4,
+          "paired_decrease": 2
+        },
+        "0.5": {
+          "original_rate": 0.003,
+          "restored_rate": 0.002,
+          "paired_increase": 1,
+          "paired_decrease": 2
+        }
+      },
+      "wilcoxon_p": 0.04517162265279293
+    },
+    "results\\cnnspot_official_restormer.csv": {
+      "n": 1000,
+      "mean_original": 0.003676355632030491,
+      "mean_restored": 0.004269564850044414,
+      "mean_delta": 0.0005932092180139232,
+      "mean_delta_bootstrap_95": [
+        -0.002610656939851438,
+        0.003794831722809007
+      ],
+      "median_delta": 1.3266706078882988e-15,
+      "increased": 607,
+      "decreased": 393,
+      "unchanged": 0,
+      "thresholds": {
+        "0.01": {
+          "original_rate": 0.015,
+          "restored_rate": 0.012,
+          "paired_increase": 6,
+          "paired_decrease": 9
+        },
+        "0.05": {
+          "original_rate": 0.008,
+          "restored_rate": 0.01,
+          "paired_increase": 8,
+          "paired_decrease": 6
+        },
+        "0.1": {
+          "original_rate": 0.005,
+          "restored_rate": 0.007,
+          "paired_increase": 5,
+          "paired_decrease": 3
+        },
+        "0.5": {
+          "original_rate": 0.003,
+          "restored_rate": 0.003,
+          "paired_increase": 2,
+          "paired_decrease": 2
+        }
+      },
+      "wilcoxon_p": 4.3998615904737957e-10
+    },
+    "results\\cnnspot_official_prob01_realesr.csv": {
+      "n": 1000,
+      "mean_original": 0.012353373983444488,
+      "mean_restored": 0.010540713786529831,
+      "mean_delta": -0.001812660196914655,
+      "mean_delta_bootstrap_95": [
+        -0.005250228218146557,
+        0.0016973011832764032
+      ],
+      "median_delta": -1.246679426799267e-13,
+      "increased": 450,
+      "decreased": 550,
+      "unchanged": 0,
+      "thresholds": {
+        "0.01": {
+          "original_rate": 0.035,
+          "restored_rate": 0.033,
+          "paired_increase": 10,
+          "paired_decrease": 12
+        },
+        "0.05": {
+          "original_rate": 0.026,
+          "restored_rate": 0.022,
+          "paired_increase": 6,
+          "paired_decrease": 10
+        },
+        "0.1": {
+          "original_rate": 0.019,
+          "restored_rate": 0.018,
+          "paired_increase": 5,
+          "paired_decrease": 6
+        },
+        "0.5": {
+          "original_rate": 0.012,
+          "restored_rate": 0.009,
+          "paired_increase": 2,
+          "paired_decrease": 5
+        }
+      },
+      "wilcoxon_p": 0.0009749244142757541
+    },
+    "results\\cnnspot_official_prob01_restormer.csv": {
+      "n": 1000,
+      "mean_original": 0.012353373983444488,
+      "mean_restored": 0.019400037232015742,
+      "mean_delta": 0.007046663248571253,
+      "mean_delta_bootstrap_95": [
+        0.001234825253801033,
+        0.01332888714748534
+      ],
+      "median_delta": 1.2459487877460474e-09,
+      "increased": 721,
+      "decreased": 279,
+      "unchanged": 0,
+      "thresholds": {
+        "0.01": {
+          "original_rate": 0.035,
+          "restored_rate": 0.062,
+          "paired_increase": 39,
+          "paired_decrease": 12
+        },
+        "0.05": {
+          "original_rate": 0.026,
+          "restored_rate": 0.04,
+          "paired_increase": 24,
+          "paired_decrease": 10
+        },
+        "0.1": {
+          "original_rate": 0.019,
+          "restored_rate": 0.033,
+          "paired_increase": 20,
+          "paired_decrease": 6
+        },
+        "0.5": {
+          "original_rate": 0.012,
+          "restored_rate": 0.017,
+          "paired_increase": 10,
+          "paired_decrease": 5
+        }
+      },
+      "wilcoxon_p": 6.45486149784296e-36
+    },
+    "results\\univfd_official.csv": {
+      "n": 1000,
+      "mean_original": 0.012006654278414996,
+      "mean_restored": 0.02560343902633061,
+      "mean_delta": 0.01359678474791561,
+      "mean_delta_bootstrap_95": [
+        0.009237079240296934,
+        0.018601024500623908
+      ],
+      "median_delta": 0.00011939795513164968,
+      "increased": 761,
+      "decreased": 239,
+      "unchanged": 0,
+      "thresholds": {
+        "0.01": {
+          "original_rate": 0.116,
+          "restored_rate": 0.197,
+          "paired_increase": 91,
+          "paired_decrease": 10
+        },
+        "0.05": {
+          "original_rate": 0.044,
+          "restored_rate": 0.087,
+          "paired_increase": 51,
+          "paired_decrease": 8
+        },
+        "0.1": {
+          "original_rate": 0.027,
+          "restored_rate": 0.054,
+          "paired_increase": 29,
+          "paired_decrease": 2
+        },
+        "0.5": {
+          "original_rate": 0.006,
+          "restored_rate": 0.016,
+          "paired_increase": 12,
+          "paired_decrease": 2
+        }
+      },
+      "wilcoxon_p": 6.0340539441763984e-58
+    },
+    "results\\univfd_official_restorer.csv": {
+      "n": 1000,
+      "mean_original": 0.012006637991983631,
+      "mean_restored": 0.029117861992889,
+      "mean_delta": 0.017111224000905367,
+      "mean_delta_bootstrap_95": [
+        0.012743431944919656,
+        0.022022182281039696
+      ],
+      "median_delta": 0.00040472727414454996,
+      "increased": 839,
+      "decreased": 161,
+      "unchanged": 0,
+      "thresholds": {
+        "0.01": {
+          "original_rate": 0.116,
+          "restored_rate": 0.229,
+          "paired_increase": 120,
+          "paired_decrease": 7
+        },
+        "0.05": {
+          "original_rate": 0.044,
+          "restored_rate": 0.103,
+          "paired_increase": 65,
+          "paired_decrease": 6
+        },
+        "0.1": {
+          "original_rate": 0.027,
+          "restored_rate": 0.065,
+          "paired_increase": 43,
+          "paired_decrease": 5
+        },
+        "0.5": {
+          "original_rate": 0.006,
+          "restored_rate": 0.016,
+          "paired_increase": 10,
+          "paired_decrease": 0
+        }
+      },
+      "wilcoxon_p": 1.1711548802307228e-88
+    },
+    "results\\cnnspot_official_jpeg70.csv": {
+      "n": 1000,
+      "mean_original": 0.003676355632030491,
+      "mean_restored": 0.003002817003490847,
+      "mean_delta": -0.0006735386285396435,
+      "mean_delta_bootstrap_95": [
+        -0.0024210647685158453,
+        0.0006603078936635043
+      ],
+      "median_delta": 3.367641164168197e-13,
+      "increased": 757,
+      "decreased": 243,
+      "unchanged": 0,
+      "thresholds": {
+        "0.01": {
+          "original_rate": 0.015,
+          "restored_rate": 0.01,
+          "paired_increase": 2,
+          "paired_decrease": 7
+        },
+        "0.05": {
+          "original_rate": 0.008,
+          "restored_rate": 0.006,
+          "paired_increase": 3,
+          "paired_decrease": 5
+        },
+        "0.1": {
+          "original_rate": 0.005,
+          "restored_rate": 0.005,
+          "paired_increase": 2,
+          "paired_decrease": 2
+        },
+        "0.5": {
+          "original_rate": 0.003,
+          "restored_rate": 0.003,
+          "paired_increase": 1,
+          "paired_decrease": 1
+        }
+      },
+      "wilcoxon_p": 2.940581111785539e-44
+    },
+    "results\\cnnspot_official_jpeg50.csv": {
+      "n": 1000,
+      "mean_original": 0.003676355632030491,
+      "mean_restored": 0.004459717374078088,
+      "mean_delta": 0.0007833617420475969,
+      "mean_delta_bootstrap_95": [
+        -0.0017812457829294393,
+        0.0036329004996304864
+      ],
+      "median_delta": 2.84071223304299e-11,
+      "increased": 879,
+      "decreased": 121,
+      "unchanged": 0,
+      "thresholds": {
+        "0.01": {
+          "original_rate": 0.015,
+          "restored_rate": 0.017,
+          "paired_increase": 9,
+          "paired_decrease": 7
+        },
+        "0.05": {
+          "original_rate": 0.008,
+          "restored_rate": 0.011,
+          "paired_increase": 6,
+          "paired_decrease": 3
+        },
+        "0.1": {
+          "original_rate": 0.005,
+          "restored_rate": 0.009,
+          "paired_increase": 7,
+          "paired_decrease": 3
+        },
+        "0.5": {
+          "original_rate": 0.003,
+          "restored_rate": 0.004,
+          "paired_increase": 2,
+          "paired_decrease": 1
+        }
+      },
+      "wilcoxon_p": 1.4714694958189162e-87
+    },
+    "results\\cnnspot_official_resize50.csv": {
+      "n": 1000,
+      "mean_original": 0.003676355632030491,
+      "mean_restored": 0.006921191033176459,
+      "mean_delta": 0.003244835401145968,
+      "mean_delta_bootstrap_95": [
+        0.000787171999067787,
+        0.006221823653374842
+      ],
+      "median_delta": 2.2870509936774803e-12,
+      "increased": 820,
+      "decreased": 180,
+      "unchanged": 0,
+      "thresholds": {
+        "0.01": {
+          "original_rate": 0.015,
+          "restored_rate": 0.024,
+          "paired_increase": 12,
+          "paired_decrease": 3
+        },
+        "0.05": {
+          "original_rate": 0.008,
+          "restored_rate": 0.015,
+          "paired_increase": 9,
+          "paired_decrease": 2
+        },
+        "0.1": {
+          "original_rate": 0.005,
+          "restored_rate": 0.011,
+          "paired_increase": 6,
+          "paired_decrease": 0
+        },
+        "0.5": {
+          "original_rate": 0.003,
+          "restored_rate": 0.007,
+          "paired_increase": 4,
+          "paired_decrease": 0
+        }
+      },
+      "wilcoxon_p": 3.837431885367863e-71
+    },
+    "results\\univfd_official_jpeg70.csv": {
+      "n": 1000,
+      "mean_original": 0.012006614479711285,
+      "mean_restored": 0.02919335836761575,
+      "mean_delta": 0.017186743887904466,
+      "mean_delta_bootstrap_95": [
+        0.012977122874984781,
+        0.022147175549622262
+      ],
+      "median_delta": 0.00026003524180855,
+      "increased": 827,
+      "decreased": 173,
+      "unchanged": 0,
+      "thresholds": {
+        "0.01": {
+          "original_rate": 0.116,
+          "restored_rate": 0.201,
+          "paired_increase": 93,
+          "paired_decrease": 8
+        },
+        "0.05": {
+          "original_rate": 0.044,
+          "restored_rate": 0.098,
+          "paired_increase": 61,
+          "paired_decrease": 7
+        },
+        "0.1": {
+          "original_rate": 0.027,
+          "restored_rate": 0.065,
+          "paired_increase": 42,
+          "paired_decrease": 4
+        },
+        "0.5": {
+          "original_rate": 0.006,
+          "restored_rate": 0.017,
+          "paired_increase": 11,
+          "paired_decrease": 0
+        }
+      },
+      "wilcoxon_p": 7.328160639013342e-79
+    },
+    "results\\univfd_official_jpeg50.csv": {
+      "n": 1000,
+      "mean_original": 0.012006614479711285,
+      "mean_restored": 0.03412878223327066,
+      "mean_delta": 0.022122167753559373,
+      "mean_delta_bootstrap_95": [
+        0.017026417833466624,
+        0.027726418520766714
+      ],
+      "median_delta": 0.0005460227330331207,
+      "increased": 852,
+      "decreased": 148,
+      "unchanged": 0,
+      "thresholds": {
+        "0.01": {
+          "original_rate": 0.116,
+          "restored_rate": 0.229,
+          "paired_increase": 126,
+          "paired_decrease": 13
+        },
+        "0.05": {
+          "original_rate": 0.044,
+          "restored_rate": 0.114,
+          "paired_increase": 77,
+          "paired_decrease": 7
+        },
+        "0.1": {
+          "original_rate": 0.027,
+          "restored_rate": 0.07,
+          "paired_increase": 44,
+          "paired_decrease": 1
+        },
+        "0.5": {
+          "original_rate": 0.006,
+          "restored_rate": 0.021,
+          "paired_increase": 16,
+          "paired_decrease": 1
+        }
+      },
+      "wilcoxon_p": 1.1357815757568457e-88
+    },
+    "results\\cnnspot_official_genimage_same_benchmark.csv": {
+      "n": 500,
+      "mean_original": 0.005545993996455897,
+      "mean_restored": 0.011340017457200502,
+      "mean_delta": 0.005794023460744608,
+      "mean_delta_bootstrap_95": [
+        -0.0019961588685697374,
+        0.014768962534107208
+      ],
+      "median_delta": 2.3296139742451398e-14,
+      "increased": 315,
+      "decreased": 185,
+      "unchanged": 0,
+      "thresholds": {
+        "0.01": {
+          "original_rate": 0.022,
+          "restored_rate": 0.026,
+          "paired_increase": 7,
+          "paired_decrease": 5
+        },
+        "0.05": {
+          "original_rate": 0.014,
+          "restored_rate": 0.02,
+          "paired_increase": 6,
+          "paired_decrease": 3
+        },
+        "0.1": {
+          "original_rate": 0.012,
+          "restored_rate": 0.018,
+          "paired_increase": 6,
+          "paired_decrease": 3
+        },
+        "0.5": {
+          "original_rate": 0.004,
+          "restored_rate": 0.01,
+          "paired_increase": 5,
+          "paired_decrease": 2
+        }
+      },
+      "wilcoxon_p": 1.9988414078981037e-06
+    },
+    "results\\univfd_official_genimage_same_benchmark.csv": {
+      "n": 500,
+      "mean_original": 0.015412882969020651,
+      "mean_restored": 0.02887305712006539,
+      "mean_delta": 0.013460174151044732,
+      "mean_delta_bootstrap_95": [
+        0.007775544336916634,
+        0.019927503980119197
+      ],
+      "median_delta": 7.831291441109997e-05,
+      "increased": 353,
+      "decreased": 147,
+      "unchanged": 0,
+      "thresholds": {
+        "0.01": {
+          "original_rate": 0.14,
+          "restored_rate": 0.206,
+          "paired_increase": 46,
+          "paired_decrease": 13
+        },
+        "0.05": {
+          "original_rate": 0.05,
+          "restored_rate": 0.072,
+          "paired_increase": 15,
+          "paired_decrease": 4
+        },
+        "0.1": {
+          "original_rate": 0.034,
+          "restored_rate": 0.056,
+          "paired_increase": 13,
+          "paired_decrease": 2
+        },
+        "0.5": {
+          "original_rate": 0.008,
+          "restored_rate": 0.022,
+          "paired_increase": 7,
+          "paired_decrease": 0
+        }
+      },
+      "wilcoxon_p": 9.137921193915619e-21
+    }
+  }
+}
