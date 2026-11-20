@@ -10,7 +10,9 @@ Nothing is copied from the abstract.
 - Split: grouped by `source_id` (an original and its restored copy never span
   the split), 75/25 train/test, seed 42.
 - Data: 1,000 COCO val2017 + 1,000 Real-ESRGAN restorations + 1,000 GenImage.
-- Hardware: CPU only (AMD64, no CUDA).
+- Hardware: CUDA-enabled NVIDIA GeForce GTX 1650 Ti for the final official
+  detector and Restormer runs; the earlier pilot probe metrics were CPU runs,
+  while the demo probe was retrained on CUDA.
 
 ## Three-class provenance classification
 
@@ -103,3 +105,28 @@ checkpoints directly and still does not produce the abstract's rates.
    affect the result; the abstract does not specify enough detail to guarantee an
    exact reproduction.
 5. **Single seed.** No variance across seeds is reported yet.
+
+6. **Detector operating point.** The official audit reports false-positive
+   rates at score 0.5, matching the motivating claim as closely as possible.
+   It is not a complete detector benchmark: precision, recall, calibration,
+   AUROC, and threshold curves for CNNSpot and UnivFD are not claimed here.
+7. **Corpus matching.** The abstract does not disclose enough information to
+   reconstruct its exact image corpus, restoration parameters, or checkpoint
+   preprocessing. The measured audit is therefore a transparent audit on this
+   repository's paired corpus, not an exact replication.
+8. **Demo scope.** The interactive UI uses Real-ESRGAN and CNNSpot for fast
+   single-image feedback. Restormer and UnivFD remain available through the
+   reproducible batch evaluators and their full-corpus results above.
+
+## Reproducibility status
+
+The repository records the CUDA environment, official checkpoint paths,
+preprocessing, paired CSV outputs, and demo dependency versions. A fresh
+checkout still needs the data and non-redistributable model weights downloaded
+according to `docs/DATASETS.md` and `docs/EXPERIMENT_PROTOCOL.md`; they are
+intentionally excluded from Git. The demo probe is regenerated with:
+
+```powershell
+python scripts/train_probe.py --manifest data/manifest.csv `
+  --output results/demo_probe_224 --size 224 --batch-size 32
+```

@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import shutil
 import sys
 import uuid
 from datetime import datetime, timezone
@@ -106,6 +107,13 @@ def build_app(
                 continue
         return items[:20]
 
+    def difference_map(original: Image.Image, restored: Image.Image) -> Image.Image:
+        a = np.asarray(original.convert("RGB")).astype(np.int16)
+        b = np.asarray(restored.convert("RGB")).astype(np.int16)
+        delta = np.abs(a - b).mean(axis=2)
+        visible = np.clip(delta * 8.0, 0, 255).astype(np.uint8)
+        return Image.fromarray(np.repeat(visible[:, :, None], 3, axis=2))
+
     def restore(image: Image.Image) -> Image.Image:
         nonlocal restorer
         if restorer is None:
@@ -127,9 +135,10 @@ def build_app(
 
     def score(image: Image.Image):
         if image is None:
-            return None, None, "Upload an image to begin."
+            return None, None, None, "Upload an image to begin.", history_items()
         image = image.convert("RGB")
         restored = restore(image)
+        diff = difference_map(image, restored)
         with torch.inference_mode():
             features = backbone(probe_tf(image).unsqueeze(0).to(device)).cpu().numpy()
             probe_probs = classifier.predict_proba(features)[0]
@@ -146,6 +155,12 @@ def build_app(
             f"- **CNNSpot synthetic probability (Real-ESRGAN preview):** "
             f"{restored_score:.1%}\n"
             f"- **Decision threshold:** 50%\n"
+        )
+        mean_delta = float(
+            np.abs(
+                np.asarray(image, dtype=np.int16)
+                - np.asarray(restored, dtype=np.int16)
+            ).mean()
         )
         record_dir = history_dir / (
             datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
@@ -175,9 +190,18 @@ def build_app(
         note = (
             f"### IRIS 27 result\n{probe_text}\n\n### Official CNNSpot score\n"
             f"{detector_text}\n"
+            f"- **Mean pixel change after restoration:** {mean_delta:.2f}/255\n\n"
             f"_Device: `{device}`. Scores are model outputs, not proof of provenance._"
         )
-        return image, restored, note, history_items()
+        return image, restored, diff, note, history_items()
+
+    def clear_history():
+        for child in history_dir.iterdir():
+            if child.is_dir():
+                shutil.rmtree(child)
+            elif child.is_file():
+                child.unlink()
+        return [], "History cleared. New uploads will be saved here."
 
     with gr.Blocks(title="IRIS 27 — Image Provenance") as demo:
         gr.Markdown(
@@ -192,19 +216,26 @@ def build_app(
             with gr.Column():
                 original = gr.Image(label="Input")
                 restored_output = gr.Image(label="Real-ESRGAN preview")
-        report = gr.Markdown("Upload an image, then click **Analyze image**.")
-        history = gr.Gallery(
-            value=history_items(),
-            label="Analysis history (saved locally)",
-            columns=4,
-            height="auto",
-            object_fit="contain",
+        diff_output = gr.Image(
+            label="Amplified pixel difference (visualization only)"
         )
+        report = gr.Markdown("Upload an image, then click **Analyze image**.")
+        with gr.Row():
+            history = gr.Gallery(
+                value=history_items(),
+                label="Analysis history (saved locally)",
+                columns=4,
+                height="auto",
+                object_fit="contain",
+                scale=5,
+            )
+            clear = gr.Button("Clear local history", variant="secondary", scale=1)
         run.click(
             score,
             inputs=upload,
-            outputs=[original, restored_output, report, history],
+            outputs=[original, restored_output, diff_output, report, history],
         )
+        clear.click(clear_history, outputs=[history, report])
         gr.Markdown(
             "**Research caution:** this interactive view is a qualitative demo. "
             "The paper's measured rates come from the fixed 1,000-image paired "

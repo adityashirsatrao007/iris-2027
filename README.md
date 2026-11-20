@@ -43,9 +43,12 @@ alongside the released CNNSpot synthetic probability:
 ```
 
 Open `http://127.0.0.1:7860`. The first analyzed image downloads the official
-Real-ESRGAN weight if it is not already present. Use `-Share` only when a
-temporary public link is needed. This UI is a qualitative demonstration; the
-fixed paired results in `docs/RESULTS.md` remain the authoritative measurements.
+Real-ESRGAN weight if it is not already present. The UI also shows an amplified
+pixel-difference visualization and provides a **Clear local history** button.
+Use `-Share` only when a temporary public link is needed. This UI is a
+qualitative demonstration; the fixed paired results in `docs/RESULTS.md`
+remain the authoritative measurements. Uploaded history is local and excluded
+from Git.
 
 ## Models
 
