@@ -18,3 +18,5 @@ paper/*.fls
 paper/*.log
 tools/colab/target.json
 !paper/main.bbl
+external/
+data/official_models/
