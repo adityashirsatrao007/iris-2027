@@ -1,0 +1,388 @@
+{
+  "thresholds": [
+    0.01,
+    0.05,
+    0.1,
+    0.5
+  ],
+  "files": {
+    "results\\cnnspot_official.csv": {
+      "n": 1000,
+      "mean_original": 0.003676343441203053,
+      "mean_restored": 0.003151614015247229,
+      "mean_delta": -0.0005247294259558248,
+      "mean_delta_bootstrap_95": [
+        -0.0032627597940864225,
+        0.0022967355480308154
+      ],
+      "increased": 558,
+      "decreased": 442,
+      "unchanged": 0,
+      "thresholds": {
+        "0.01": {
+          "original_rate": 0.015,
+          "original_wilson_95": [
+            0.009110978804081668,
+            0.024600976926906798
+          ],
+          "restored_rate": 0.018,
+          "restored_wilson_95": [
+            0.011415740009567788,
+            0.028273255170507345
+          ]
+        },
+        "0.05": {
+          "original_rate": 0.008,
+          "original_wilson_95": [
+            0.004059195818806103,
+            0.015706334530980144
+          ],
+          "restored_rate": 0.009,
+          "restored_wilson_95": [
+            0.004742060667477063,
+            0.01701581616533807
+          ]
+        },
+        "0.1": {
+          "original_rate": 0.005,
+          "original_wilson_95": [
+            0.0021375355273244596,
+            0.011650955373375113
+          ],
+          "restored_rate": 0.007,
+          "restored_wilson_95": [
+            0.0033948684009907646,
+            0.014378315465766588
+          ]
+        },
+        "0.5": {
+          "original_rate": 0.003,
+          "original_wilson_95": [
+            0.0010207838811386186,
+            0.008783014053503173
+          ],
+          "restored_rate": 0.002,
+          "restored_wilson_95": [
+            0.000548643588120728,
+            0.007262807863492177
+          ]
+        }
+      }
+    },
+    "results\\cnnspot_official_restormer.csv": {
+      "n": 1000,
+      "mean_original": 0.003676355632030491,
+      "mean_restored": 0.004269564850044414,
+      "mean_delta": 0.0005932092180139232,
+      "mean_delta_bootstrap_95": [
+        -0.0026788680471261954,
+        0.0037661657835841174
+      ],
+      "increased": 607,
+      "decreased": 393,
+      "unchanged": 0,
+      "thresholds": {
+        "0.01": {
+          "original_rate": 0.015,
+          "original_wilson_95": [
+            0.009110978804081668,
+            0.024600976926906798
+          ],
+          "restored_rate": 0.012,
+          "restored_wilson_95": [
+            0.006877647806403522,
+            0.02085726847549828
+          ]
+        },
+        "0.05": {
+          "original_rate": 0.008,
+          "original_wilson_95": [
+            0.004059195818806103,
+            0.015706334530980144
+          ],
+          "restored_rate": 0.01,
+          "restored_wilson_95": [
+            0.005440754445529249,
+            0.018309468870314774
+          ]
+        },
+        "0.1": {
+          "original_rate": 0.005,
+          "original_wilson_95": [
+            0.0021375355273244596,
+            0.011650955373375113
+          ],
+          "restored_rate": 0.007,
+          "restored_wilson_95": [
+            0.0033948684009907646,
+            0.014378315465766588
+          ]
+        },
+        "0.5": {
+          "original_rate": 0.003,
+          "original_wilson_95": [
+            0.0010207838811386186,
+            0.008783014053503173
+          ],
+          "restored_rate": 0.003,
+          "restored_wilson_95": [
+            0.0010207838811386186,
+            0.008783014053503173
+          ]
+        }
+      }
+    },
+    "results\\cnnspot_official_prob01_realesr.csv": {
+      "n": 1000,
+      "mean_original": 0.012353373983444488,
+      "mean_restored": 0.010540713786529831,
+      "mean_delta": -0.001812660196914655,
+      "mean_delta_bootstrap_95": [
+        -0.00501217511325339,
+        0.00165607263656408
+      ],
+      "increased": 450,
+      "decreased": 550,
+      "unchanged": 0,
+      "thresholds": {
+        "0.01": {
+          "original_rate": 0.035,
+          "original_wilson_95": [
+            0.02527226301711295,
+            0.04828662237445333
+          ],
+          "restored_rate": 0.033,
+          "restored_wilson_95": [
+            0.023592927958426907,
+            0.04598126446708159
+          ]
+        },
+        "0.05": {
+          "original_rate": 0.026,
+          "original_wilson_95": [
+            0.017803938201616326,
+            0.03782382884268993
+          ],
+          "restored_rate": 0.022,
+          "restored_wilson_95": [
+            0.014572707764791058,
+            0.03308567334739963
+          ]
+        },
+        "0.1": {
+          "original_rate": 0.019,
+          "original_wilson_95": [
+            0.012196885750790904,
+            0.02948445591231312
+          ],
+          "restored_rate": 0.018,
+          "restored_wilson_95": [
+            0.011415740009567788,
+            0.028273255170507345
+          ]
+        },
+        "0.5": {
+          "original_rate": 0.012,
+          "original_wilson_95": [
+            0.006877647806403522,
+            0.02085726847549828
+          ],
+          "restored_rate": 0.009,
+          "restored_wilson_95": [
+            0.004742060667477063,
+            0.01701581616533807
+          ]
+        }
+      }
+    },
+    "results\\cnnspot_official_prob01_restormer.csv": {
+      "n": 1000,
+      "mean_original": 0.012353373983444488,
+      "mean_restored": 0.019400037232015742,
+      "mean_delta": 0.007046663248571253,
+      "mean_delta_bootstrap_95": [
+        0.0012703113512268576,
+        0.013338784809013448
+      ],
+      "increased": 721,
+      "decreased": 279,
+      "unchanged": 0,
+      "thresholds": {
+        "0.01": {
+          "original_rate": 0.035,
+          "original_wilson_95": [
+            0.02527226301711295,
+            0.04828662237445333
+          ],
+          "restored_rate": 0.062,
+          "restored_wilson_95": [
+            0.04866418011998064,
+            0.07868806031336564
+          ]
+        },
+        "0.05": {
+          "original_rate": 0.026,
+          "original_wilson_95": [
+            0.017803938201616326,
+            0.03782382884268993
+          ],
+          "restored_rate": 0.04,
+          "restored_wilson_95": [
+            0.02951097368545276,
+            0.05400964412125796
+          ]
+        },
+        "0.1": {
+          "original_rate": 0.019,
+          "original_wilson_95": [
+            0.012196885750790904,
+            0.02948445591231312
+          ],
+          "restored_rate": 0.033,
+          "restored_wilson_95": [
+            0.023592927958426907,
+            0.04598126446708159
+          ]
+        },
+        "0.5": {
+          "original_rate": 0.012,
+          "original_wilson_95": [
+            0.006877647806403522,
+            0.02085726847549828
+          ],
+          "restored_rate": 0.017,
+          "restored_wilson_95": [
+            0.010640689856816328,
+            0.027055958840229925
+          ]
+        }
+      }
+    },
+    "results\\univfd_official.csv": {
+      "n": 1000,
+      "mean_original": 0.012006654278414996,
+      "mean_restored": 0.02560343902633061,
+      "mean_delta": 0.01359678474791561,
+      "mean_delta_bootstrap_95": [
+        0.009387215568228881,
+        0.018469960790230503
+      ],
+      "increased": 761,
+      "decreased": 239,
+      "unchanged": 0,
+      "thresholds": {
+        "0.01": {
+          "original_rate": 0.116,
+          "original_wilson_95": [
+            0.09760567703963383,
+            0.13733327347727253
+          ],
+          "restored_rate": 0.197,
+          "restored_wilson_95": [
+            0.17352816173578522,
+            0.22279085390646125
+          ]
+        },
+        "0.05": {
+          "original_rate": 0.044,
+          "original_wilson_95": [
+            0.0329382145884185,
+            0.058551789150407776
+          ],
+          "restored_rate": 0.087,
+          "restored_wilson_95": [
+            0.071074421452375,
+            0.10608648105669352
+          ]
+        },
+        "0.1": {
+          "original_rate": 0.027,
+          "original_wilson_95": [
+            0.018621382774294995,
+            0.03899873075304015
+          ],
+          "restored_rate": 0.054,
+          "restored_wilson_95": [
+            0.04162131372306273,
+            0.06979215484605245
+          ]
+        },
+        "0.5": {
+          "original_rate": 0.006,
+          "original_wilson_95": [
+            0.0027526691418763745,
+            0.01302816824185209
+          ],
+          "restored_rate": 0.016,
+          "restored_wilson_95": [
+            0.009872242002277388,
+            0.02583206021173997
+          ]
+        }
+      }
+    },
+    "results\\univfd_official_restorer.csv": {
+      "n": 1000,
+      "mean_original": 0.012006637991983631,
+      "mean_restored": 0.029117861992889,
+      "mean_delta": 0.017111224000905367,
+      "mean_delta_bootstrap_95": [
+        0.012596844268477526,
+        0.022257298427542437
+      ],
+      "increased": 839,
+      "decreased": 161,
+      "unchanged": 0,
+      "thresholds": {
+        "0.01": {
+          "original_rate": 0.116,
+          "original_wilson_95": [
+            0.09760567703963383,
+            0.13733327347727253
+          ],
+          "restored_rate": 0.229,
+          "restored_wilson_95": [
+            0.20402312975052514,
+            0.25605097334864574
+          ]
+        },
+        "0.05": {
+          "original_rate": 0.044,
+          "original_wilson_95": [
+            0.0329382145884185,
+            0.058551789150407776
+          ],
+          "restored_rate": 0.103,
+          "restored_wilson_95": [
+            0.08565481000508716,
+            0.1233836362324436
+          ]
+        },
+        "0.1": {
+          "original_rate": 0.027,
+          "original_wilson_95": [
+            0.018621382774294995,
+            0.03899873075304015
+          ],
+          "restored_rate": 0.065,
+          "restored_wilson_95": [
+            0.051323770569062045,
+            0.0820055093133709
+          ]
+        },
+        "0.5": {
+          "original_rate": 0.006,
+          "original_wilson_95": [
+            0.0027526691418763745,
+            0.01302816824185209
+          ],
+          "restored_rate": 0.016,
+          "restored_wilson_95": [
+            0.009872242002277388,
+            0.02583206021173997
+          ]
+        }
+      }
+    }
+  }
+}

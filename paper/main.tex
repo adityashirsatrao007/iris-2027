@@ -32,8 +32,9 @@ problem --- \emph{original}, \emph{restored}, \emph{generated} --- rather than a
 binary one. On 3{,}000 images (1{,}000 COCO photographs, their Real-ESRGAN
 restorations, and 1{,}000 GenImage samples from four generator families) we train a
 frozen ResNet-50 feature extractor with a linear head and report source-disjoint
-results. Three-class accuracy is 88.28\% with macro-AUROC 0.957 at 224\,px input and
-82.29\% with macro-AUROC 0.926 at the resolution-matched 128\,px setting. The
+results. Across three seeds, three-class accuracy is 86.66$\pm$1.45\% with
+macro-AUROC 0.956$\pm$0.004 at 224\,px input and 82.29\% with macro-AUROC
+0.926 at the resolution-matched 128\,px setting. The
 confusion is overwhelmingly between original and restored (79 of 468 authentic
 images), while generated images are almost perfectly separated (99.25\% recall), and
 restoration is itself detectable against its own source photograph at AUROC 0.889.
@@ -85,8 +86,9 @@ This paper reports both, on data we generated end to end. Our contributions are:
 \begin{enumerate}
 \item We formulate provenance as a three-class problem and evaluate it under a
 source-disjoint split, so that a photograph and its restoration never appear on
-opposite sides of the train/test boundary. Three-class accuracy is 88.28\% with
-macro-AUROC 0.957 at 224\,px and 82.29\% with macro-AUROC 0.926 at 128\,px.
+opposite sides of the train/test boundary. Across three seeds, three-class
+accuracy is 86.66$\pm$1.45\% with macro-AUROC 0.956$\pm$0.004 at 224\,px and
+82.29\% with macro-AUROC 0.926 at 128\,px.
 \item We localise the difficulty. Nearly all errors are original--restored
 confusions (79 of 468 authentic test images), whereas generated images are
 separated almost perfectly (99.25\% recall). Restoration is detectable against its
@@ -258,12 +260,12 @@ photograph, 2{,}266 train / 734 test images.}
 Input & Accuracy & Balanced acc. & Macro-F1 & Macro-AUROC & ECE \\
 \midrule
 $128\times128$ (matched) & 82.29\% & 81.62\% & 81.62\% & 0.926 & 0.141 \\
-$224\times224$ (standard) & \best{88.28\%} & \best{87.78\%} & \best{87.77\%} & \best{0.957} & \best{0.073} \\
+$224\times224$ (3 seeds) & \best{86.66\%} & \best{86.39\%} & \best{86.42\%} & \best{0.956} & \best{0.076} \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Two effects are visible. First, the matched setting is harder by roughly six
+Two effects are visible. First, the matched setting is harder by roughly four
 accuracy points, which is expected: at 128\,px the restoration residual is a smaller
 fraction of the signal. Second, calibration improves sharply with resolution, with
 ECE falling from 0.141 to 0.073. Both settings are far above the 33.3\% chance level,
@@ -440,7 +442,8 @@ the two boundaries.
 
 Provenance is not binary once restoration is in the pipeline. On a controlled
 3{,}000-image corpus, a frozen ResNet-50 probe recovers original, restored, and
-generated labels with 88.28\% accuracy and macro-AUROC 0.957, and the errors
+generated labels with 86.66$\pm$1.45\% accuracy and macro-AUROC
+0.956$\pm$0.004, and the errors
 concentrate on the original/restored boundary while generated images remain nearly
 separable. Restoration is detectable from its own source photograph at AUROC 0.889,
 which is far from the near-perfect separation of synthesised content but far from
