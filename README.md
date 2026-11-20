@@ -72,6 +72,9 @@ alongside the released CNNSpot synthetic probability:
 Open `http://127.0.0.1:7860`. The first analyzed image downloads the official
 Real-ESRGAN weight if it is not already present. The UI also shows an amplified
 pixel-difference visualization and provides a **Clear local history** button.
+History entries are labeled with the uploaded filename and paired `INPUT` and
+`RESTORED` outputs. Re-uploading the same file is detected by SHA-256 and is
+not saved as a duplicate.
 Use `-Share` only when a temporary public link is needed. This UI is a
 qualitative demonstration; the fixed paired results in `docs/RESULTS.md`
 remain the authoritative measurements. Uploaded history is local and excluded

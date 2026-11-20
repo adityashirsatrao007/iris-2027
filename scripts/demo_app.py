@@ -7,6 +7,7 @@ by ``scripts/train_probe.py``; CNNSpot is the released, untouched checkpoint.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import shutil
 import sys
@@ -91,21 +92,38 @@ def build_app(
                 original = meta_path.parent / "original.jpg"
                 restored = meta_path.parent / "restored.jpg"
                 if original.exists() and restored.exists():
+                    name = meta.get("input_name", meta["timestamp"])
                     items.append(
                         (
                             str(original),
-                            f"{meta['timestamp']} — input",
+                            f"{name} — INPUT",
                         )
                     )
                     items.append(
                         (
                             str(restored),
-                            f"{meta['timestamp']} — restored",
+                            f"{name} — RESTORED",
                         )
                     )
             except (OSError, KeyError, json.JSONDecodeError):
                 continue
-        return items[:20]
+        return items
+
+    def input_hashes():
+        hashes = set()
+        for meta_path in history_dir.glob("*/metadata.json"):
+            try:
+                meta = json.loads(meta_path.read_text(encoding="utf-8-sig"))
+                image_hash = meta.get("input_sha256")
+                if image_hash:
+                    hashes.add(image_hash)
+                    continue
+                legacy_original = meta_path.parent / "original.jpg"
+                if legacy_original.exists():
+                    hashes.add(hashlib.sha256(legacy_original.read_bytes()).hexdigest())
+            except (OSError, json.JSONDecodeError):
+                continue
+        return hashes
 
     def difference_map(original: Image.Image, restored: Image.Image) -> Image.Image:
         a = np.asarray(original.convert("RGB")).astype(np.int16)
@@ -133,10 +151,13 @@ def build_app(
         result = Image.fromarray((output.cpu().numpy() * 255).round().astype(np.uint8))
         return result.resize(source.size, Image.Resampling.LANCZOS)
 
-    def score(image: Image.Image):
-        if image is None:
+    def score(image_path: str):
+        if image_path is None:
             return None, None, None, "Upload an image to begin.", history_items()
-        image = image.convert("RGB")
+        source_path = Path(image_path)
+        image_bytes = source_path.read_bytes()
+        image_hash = hashlib.sha256(image_bytes).hexdigest()
+        image = Image.open(source_path).convert("RGB")
         restored = restore(image)
         diff = difference_map(image, restored)
         with torch.inference_mode():
@@ -162,38 +183,47 @@ def build_app(
                 - np.asarray(restored, dtype=np.int16)
             ).mean()
         )
-        record_dir = history_dir / (
-            datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-            + "_"
-            + uuid.uuid4().hex[:8]
-        )
-        record_dir.mkdir(parents=True, exist_ok=True)
-        image.save(record_dir / "original.jpg", quality=95)
-        restored.save(record_dir / "restored.jpg", quality=95)
-        (record_dir / "metadata.json").write_text(
-            json.dumps(
-                {
-                    "timestamp": datetime.now(timezone.utc).isoformat(),
-                    "device": str(device),
-                    "probe": {
-                        label: float(prob)
-                        for label, prob in zip(LABELS, probe_probs)
-                    },
-                    "cnnspot_input": cnn_score,
-                    "cnnspot_restored": restored_score,
-                },
-                indent=2,
+        duplicate = image_hash in input_hashes()
+        if not duplicate:
+            timestamp = datetime.now(timezone.utc).isoformat()
+            record_dir = history_dir / (
+                datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+                + "_"
+                + uuid.uuid4().hex[:8]
             )
-            + "\n",
-            encoding="utf-8",
-        )
+            record_dir.mkdir(parents=True, exist_ok=True)
+            image.save(record_dir / "original.jpg", quality=95)
+            restored.save(record_dir / "restored.jpg", quality=95)
+            (record_dir / "metadata.json").write_text(
+                json.dumps(
+                    {
+                        "timestamp": timestamp,
+                        "input_name": source_path.name,
+                        "input_sha256": image_hash,
+                        "device": str(device),
+                        "probe": {
+                            label: float(prob)
+                            for label, prob in zip(LABELS, probe_probs)
+                        },
+                        "cnnspot_input": cnn_score,
+                        "cnnspot_restored": restored_score,
+                    },
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
         note = (
             f"### IRIS 27 result\n{probe_text}\n\n### Official CNNSpot score\n"
             f"{detector_text}\n"
             f"- **Mean pixel change after restoration:** {mean_delta:.2f}/255\n\n"
             f"_Device: `{device}`. Scores are model outputs, not proof of provenance._"
         )
-        return image, restored, diff, note, history_items()
+        duplicate_note = (
+            "\n\n_This input already exists in history; no duplicate was saved._"
+            if duplicate else ""
+        )
+        return image, restored, diff, note + duplicate_note, history_items()
 
     def clear_history():
         for child in history_dir.iterdir():
@@ -211,7 +241,7 @@ def build_app(
         )
         with gr.Row():
             with gr.Column():
-                upload = gr.Image(type="pil", label="Input image")
+                upload = gr.Image(type="filepath", label="Input image")
                 run = gr.Button("Analyze image", variant="primary")
             with gr.Column():
                 original = gr.Image(label="Input")
