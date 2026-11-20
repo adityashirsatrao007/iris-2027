@@ -134,7 +134,7 @@ Headline numbers for the reproducible 224-pixel probe:
 | Input | Accuracy | Macro-F1 | AUROC |
 |---|---|---|---|
 | 128 px | 82.29% | 81.62% | 0.926 |
-| 224 px | 88.28% | 87.77% | 0.957 |
+| 224 px, 3 seeds | 86.66% ± 1.45% | 86.42% ± 1.08% | 0.956 ± 0.004 |
 
 Unseen-generator mean AUROC: 0.978. The central abstract claim (restoration
 inflating the false-positive rate) is **not** reproduced; see the official

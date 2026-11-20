@@ -35,7 +35,7 @@ frozen ResNet-50 feature extractor with a linear head and report source-disjoint
 results. Across three seeds, three-class accuracy is 86.66$\pm$1.45\% with
 macro-AUROC 0.956$\pm$0.004 at 224\,px input and 82.29\% with macro-AUROC
 0.926 at the resolution-matched 128\,px setting. The
-confusion is overwhelmingly between original and restored (79 of 468 authentic
+confusion is overwhelmingly between original and restored (81 of 468 authentic
 images), while generated images are almost perfectly separated (99.25\% recall), and
 restoration is itself detectable against its own source photograph at AUROC 0.889.
 Real-versus-generated classifiers transfer to unseen generator families with a mean
@@ -418,6 +418,11 @@ same-benchmark control rather than a pixel-matched benchmark. The probe achieved
 were 62.50\% and 76.56\%, respectively. The lower result than the primary
 COCO/GenImage experiment confirms that source-distribution differences inflated
 the original generated-class separation.
+
+On the same control pairs, CNNSpot's 0.5-threshold rate changed from 0.40\% to
+1.00\%, while UnivFD changed from 0.80\% to 2.20\%. These estimates use 500
+source images and are reported as a control analysis, not as a replacement for
+the 1,000-image primary audit.
 
 \subsection{Generalisation to an unseen generator family}
 

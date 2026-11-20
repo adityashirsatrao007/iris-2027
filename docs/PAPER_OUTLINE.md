@@ -21,8 +21,8 @@ Minimum length is four pages; abstracts alone are not published.
    - 5.4 Calibration and threshold transfer.
    - 5.5 Cross-generator holdout.
 6. **Discussion** — restoration is a provenance class, not a nuisance transform.
-7. **Threats to validity** — content confound between COCO and GenImage, single
-   restorer, 128 px ceiling, CPU-only compute.
+7. **Threats to validity** — content confound between COCO and GenImage, limited
+   restorer and detector coverage, and the 128 px ceiling.
 8. **Conclusion and recommendations** — benchmark restoration explicitly;
    recalibrate thresholds; report FPR at the deployed operating point.
 9. **Data and code availability** — manifest, scripts, seeds, checkpoint hashes.
