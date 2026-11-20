@@ -4,6 +4,33 @@ Reproducible code for **Original, Restored, or Generated: Image Restoration Push
 
 This is an evaluation harness first, and a trainable three-class model second. It never writes invented accuracy values; results are computed only from supplied images and checkpoints.
 
+## Simple explanation
+
+This project asks a simple question:
+
+> If a normal photograph is enhanced or restored, will an AI-image detector
+> mistakenly think it was made by AI?
+
+For each authentic photograph, the project creates a restored copy using an
+image-restoration model. It then compares the original and restored versions
+with AI-image detectors.
+
+The project also includes a small three-label classifier that estimates whether
+an image is:
+
+- **Original** — an authentic image without restoration
+- **Restored** — an authentic image processed by a restoration model
+- **Generated** — an AI-generated image
+
+The restoration does not change the scene or objects. It mainly changes fine
+details such as noise, edges, and texture, so the two images can look almost
+identical to a person.
+
+The important finding is that restoration can change detector scores, but the
+effect depends on the detector. Our official measurements did **not** reproduce
+the very large false-positive rates claimed in the source abstract. See
+[`docs/RESULTS.md`](docs/RESULTS.md) for the measured results.
+
 ## Setup
 
 ```powershell
