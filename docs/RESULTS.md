@@ -36,6 +36,27 @@ The confusion is almost entirely between `original` and `restored`
 (40 + 39 of 468). `generated` is nearly separable, but that number is inflated
 by the content confound described below.
 
+### Same-benchmark control
+
+To test the content-distribution confound, a separate 1,500-image control was
+created from the GenImage Arrow `biggan-test` split: 500 real, 500
+Real-ESRGAN-restored real, and 500 BigGAN-generated images. The public release
+does not expose a reliable exact real/fake source-pair identifier, so this is a
+balanced same-benchmark control, not a pixel-matched dataset.
+
+| Metric | Same-benchmark control |
+|---|---:|
+| Accuracy | 78.57% |
+| Balanced accuracy | 78.87% |
+| Macro-F1 | 78.85% |
+| Macro-AUROC | 0.900 |
+| ECE | 0.131 |
+
+Generated recall was 97.54%, while original and restored recall were 62.50%
+and 76.56%. The lower result than the COCO/GenImage experiment shows that the
+earlier generated-class separation was partly inflated by source-distribution
+differences.
+
 ## Binary contrasts (224 px)
 
 | Contrast | AUROC |
@@ -100,6 +121,12 @@ ordinary image processing also changes detector scores, so restoration effects
 must be compared against non-learned transformations rather than interpreted
 in isolation.
 
+For the JPEG controls, the official UnivFD checkpoint changed from 0.60% to
+1.70% false positives at quality 70 and to 2.10% at quality 50. Mean synthetic
+probability changed from 0.0120 to 0.0292 and 0.0341, respectively. These are
+additional measured examples of detector-dependent sensitivity; they are not
+evidence that all transformations produce the same effect.
+
 ## Does restoration get pushed into the generated class?
 
 A real-vs-fake classifier trained only on `original` and `generated`, then
@@ -119,9 +146,10 @@ checkpoints directly and still does not produce the abstract's rates.
 
 1. **Content confound.** Authentic images are COCO photographs; generated images
    are GenImage (ImageNet-derived). A classifier can exploit scene statistics
-   rather than synthesis artefacts. This inflates the `generated` recall and the
-   original-vs-generated AUROC. The fix is GenImage's matched real split, or a
-   second real source drawn from the same distribution.
+   rather than synthesis artefacts. The same-benchmark control reduces this
+   mismatch and lowers the three-class result, but the public release does not
+   provide a reliable exact real/fake source pairing, so the confound is reduced
+   rather than eliminated.
 2. **Two restorers, two families.** Real-ESRGAN and Restormer were run, but each
    represents only one super-resolution or denoising operator; no broad
    leave-one-restorer-out result exists.

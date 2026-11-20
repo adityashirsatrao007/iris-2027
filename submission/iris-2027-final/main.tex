@@ -410,14 +410,14 @@ homogeneous capability that does not exist.
 \section{Threats to Validity}
 \label{sec:threats}
 
-\paragraph{Content confound.} Authentic images are COCO photographs and generated
-images are GenImage samples derived from ImageNet classes. A classifier can exploit
-scene statistics and composition rather than synthesis artefacts, which inflates
-generated recall and the original-versus-generated AUROC of 0.998. The
-original-versus-restored contrast, AUROC 0.889, is immune to this confound because
-both sides are the same photograph; we therefore weight it more heavily in our
-conclusions. Removing the confound properly requires GenImage's matched real split or
-a second authentic source drawn from the same distribution, which we did not run.
+\paragraph{Content confound.} Authentic images are COCO photographs, whereas
+generated images are GenImage samples derived from ImageNet classes. A classifier
+can exploit scene statistics rather than synthesis artefacts. A same-benchmark
+control (500 real, 500 generated, and 500 restored-real images) obtained 78.57\%
+accuracy and macro-AUROC 0.900, lower than the primary result. Because the public
+release lacks a reliable exact real/fake source-pair identifier, this reduces but
+does not eliminate the confound. The original-versus-restored contrast remains
+source-paired.
 
 \paragraph{Detector checkpoint scope.} We ran the released CNNSpot Blur+JPEG(0.5)
 and Blur+JPEG(0.1) checkpoints and the released UnivFD CLIP ViT-L/14 checkpoint.
@@ -433,10 +433,10 @@ transfer, so the results cannot establish generality across the restoration lite
 128\,px and the standard comparison upsamples generated images by 1.75$\times$. Part
 of the 224\,px gain reflects authentic detail that generated images do not have.
 
-\paragraph{Single seed and single backbone.} We report one seed and one frozen
-backbone. Variance across seeds is not quantified, and a CLIP or DINOv2 feature space
-would likely change the absolute numbers, though not the qualitative split between
-the two boundaries.
+\paragraph{Seeds and backbone.} The 224\,px probe is summarized over three seeds,
+but the matched-benchmark control uses one seed and all probe results use one frozen
+ResNet-50 backbone. A CLIP or DINOv2 feature space could change the absolute
+numbers.
 
 \section{Conclusion}
 

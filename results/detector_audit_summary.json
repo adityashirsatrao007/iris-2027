@@ -572,6 +572,258 @@
           ]
         }
       }
+    },
+    "results\\univfd_official_jpeg70.csv": {
+      "n": 1000,
+      "mean_original": 0.012006614479711285,
+      "mean_restored": 0.02919335836761575,
+      "mean_delta": 0.017186743887904466,
+      "mean_delta_bootstrap_95": [
+        0.012965134222740227,
+        0.02210089749079379
+      ],
+      "increased": 827,
+      "decreased": 173,
+      "unchanged": 0,
+      "thresholds": {
+        "0.01": {
+          "original_rate": 0.116,
+          "original_wilson_95": [
+            0.09760567703963383,
+            0.13733327347727253
+          ],
+          "restored_rate": 0.201,
+          "restored_wilson_95": [
+            0.17732721504227128,
+            0.22696118653209074
+          ]
+        },
+        "0.05": {
+          "original_rate": 0.044,
+          "original_wilson_95": [
+            0.0329382145884185,
+            0.058551789150407776
+          ],
+          "restored_rate": 0.098,
+          "restored_wilson_95": [
+            0.08108201152335034,
+            0.11799470229903597
+          ]
+        },
+        "0.1": {
+          "original_rate": 0.027,
+          "original_wilson_95": [
+            0.018621382774294995,
+            0.03899873075304015
+          ],
+          "restored_rate": 0.065,
+          "restored_wilson_95": [
+            0.051323770569062045,
+            0.0820055093133709
+          ]
+        },
+        "0.5": {
+          "original_rate": 0.006,
+          "original_wilson_95": [
+            0.0027526691418763745,
+            0.01302816824185209
+          ],
+          "restored_rate": 0.017,
+          "restored_wilson_95": [
+            0.010640689856816328,
+            0.027055958840229925
+          ]
+        }
+      }
+    },
+    "results\\univfd_official_jpeg50.csv": {
+      "n": 1000,
+      "mean_original": 0.012006614479711285,
+      "mean_restored": 0.03412878223327066,
+      "mean_delta": 0.022122167753559373,
+      "mean_delta_bootstrap_95": [
+        0.016975164940415396,
+        0.02789835946160928
+      ],
+      "increased": 852,
+      "decreased": 148,
+      "unchanged": 0,
+      "thresholds": {
+        "0.01": {
+          "original_rate": 0.116,
+          "original_wilson_95": [
+            0.09760567703963383,
+            0.13733327347727253
+          ],
+          "restored_rate": 0.229,
+          "restored_wilson_95": [
+            0.20402312975052514,
+            0.25605097334864574
+          ]
+        },
+        "0.05": {
+          "original_rate": 0.044,
+          "original_wilson_95": [
+            0.0329382145884185,
+            0.058551789150407776
+          ],
+          "restored_rate": 0.114,
+          "restored_wilson_95": [
+            0.09576165709721693,
+            0.13519260045363163
+          ]
+        },
+        "0.1": {
+          "original_rate": 0.027,
+          "original_wilson_95": [
+            0.018621382774294995,
+            0.03899873075304015
+          ],
+          "restored_rate": 0.07,
+          "restored_wilson_95": [
+            0.05577636414629404,
+            0.08751464815128336
+          ]
+        },
+        "0.5": {
+          "original_rate": 0.006,
+          "original_wilson_95": [
+            0.0027526691418763745,
+            0.01302816824185209
+          ],
+          "restored_rate": 0.021,
+          "restored_wilson_95": [
+            0.013775739567924286,
+            0.03189029506123752
+          ]
+        }
+      }
+    },
+    "results\\cnnspot_official_genimage_same_benchmark.csv": {
+      "n": 500,
+      "mean_original": 0.005545993996455897,
+      "mean_restored": 0.011340017457200502,
+      "mean_delta": 0.005794023460744608,
+      "mean_delta_bootstrap_95": [
+        -0.0018979453299335302,
+        0.01491848150488264
+      ],
+      "increased": 315,
+      "decreased": 185,
+      "unchanged": 0,
+      "thresholds": {
+        "0.01": {
+          "original_rate": 0.022,
+          "original_wilson_95": [
+            0.012328008269927582,
+            0.03896086121131637
+          ],
+          "restored_rate": 0.026,
+          "restored_wilson_95": [
+            0.015256383923327248,
+            0.04397149083422428
+          ]
+        },
+        "0.05": {
+          "original_rate": 0.014,
+          "original_wilson_95": [
+            0.00679778979084349,
+            0.02861306913778529
+          ],
+          "restored_rate": 0.02,
+          "restored_wilson_95": [
+            0.010899183596210813,
+            0.036420183246879345
+          ]
+        },
+        "0.1": {
+          "original_rate": 0.012,
+          "original_wilson_95": [
+            0.005510995174027703,
+            0.025930361116447292
+          ],
+          "restored_rate": 0.018,
+          "restored_wilson_95": [
+            0.009498193296197078,
+            0.033851670908739286
+          ]
+        },
+        "0.5": {
+          "original_rate": 0.004,
+          "original_wilson_95": [
+            0.0010976305226827934,
+            0.014465715215177033
+          ],
+          "restored_rate": 0.01,
+          "restored_wilson_95": [
+            0.004278753896590496,
+            0.023193099755730702
+          ]
+        }
+      }
+    },
+    "results\\univfd_official_genimage_same_benchmark.csv": {
+      "n": 500,
+      "mean_original": 0.015412882969020651,
+      "mean_restored": 0.02887305712006539,
+      "mean_delta": 0.013460174151044732,
+      "mean_delta_bootstrap_95": [
+        0.0078738765324705,
+        0.020100927529938972
+      ],
+      "increased": 353,
+      "decreased": 147,
+      "unchanged": 0,
+      "thresholds": {
+        "0.01": {
+          "original_rate": 0.14,
+          "original_wilson_95": [
+            0.11232266018786358,
+            0.17316686494445405
+          ],
+          "restored_rate": 0.206,
+          "restored_wilson_95": [
+            0.17285664127336728,
+            0.24362647091802545
+          ]
+        },
+        "0.05": {
+          "original_rate": 0.05,
+          "original_wilson_95": [
+            0.034093745243849435,
+            0.0727681611715476
+          ],
+          "restored_rate": 0.072,
+          "restored_wilson_95": [
+            0.0524580314181262,
+            0.09806840401696253
+          ]
+        },
+        "0.1": {
+          "original_rate": 0.034,
+          "original_wilson_95": [
+            0.02133451980853219,
+            0.053771365501634506
+          ],
+          "restored_rate": 0.056,
+          "restored_wilson_95": [
+            0.03902562068315149,
+            0.0797447936467069
+          ]
+        },
+        "0.5": {
+          "original_rate": 0.008,
+          "original_wilson_95": [
+            0.00311531518006224,
+            0.020387035834105168
+          ],
+          "restored_rate": 0.022,
+          "restored_wilson_95": [
+            0.012328008269927582,
+            0.03896086121131637
+          ]
+        }
+      }
     }
   }
 }
