@@ -32,7 +32,7 @@ LaTeX source and PDF so the source/PDF pair is authoritative.
 | Figure captions below figures | PASS in LaTeX | Recheck after conversion to the official template |
 | Table captions above tables | PASS in LaTeX | Recheck after conversion to the official template |
 | Editable Word equations | **PENDING** | DOCX conversion must be checked; equations should be Word Math/MathType objects |
-| Numeric square-bracket citations | PASS in LaTeX | `llncs` currently produces numeric citations; verify in final template |
+| Numeric square-bracket citations | PASS | `svmult`/`spmpsci` produces numeric square-bracket citations |
 | DOI inclusion | REVIEW | Add DOI values where available |
 | Final source files and PDF match | PASS | Submission PDF is compiled from submitted `main.tex` |
 | Signed Contributor Agreement | **PENDING** | Complete and sign the supplied form |
@@ -59,34 +59,28 @@ file was found.
 ## Current paper files
 
 - LaTeX source: `paper/main.tex`
-- LaTeX PDF: `paper/main.pdf` — **12 pages**
+- LaTeX PDF: `paper/main.pdf` — **10 pages**
 - Editable DOCX: `paper/iris-27-paper.docx`
 - Submission ZIP: `dist/iris-2027-final-submission.zip`
 
-The DOCX is editable and contains the humanized wording, but its layout is not
-the official Springer Word proceedings template. The current PDF is generated
-from LaTeX and therefore cannot be claimed to match the humanized DOCX exactly.
-The final package must choose one authoritative source and generate the matching
-PDF from that same source.
+The DOCX is editable and contains the humanized wording, but it is not the
+official Springer Word proceedings template. The final package uses the LaTeX
+source as its authoritative source and the PDF has been compiled from that exact
+source; the DOCX is retained separately as a working copy.
 
 ## Required final workflow
 
-1. Obtain the official IRIS/Springer electrical-engineering proceedings template.
-2. Choose either the official Word template or the official non-LNCS LaTeX
-   template as the authoritative source.
-3. Transfer the verified humanized text into that template.
-4. Recreate all tables, figures, captions, references, and editable equations.
-5. Reduce the typeset paper to exactly 10 pages.
-6. Verify all numbers against `docs/RESULTS.md` and
+1. Complete the author and legal submission materials.
+2. Verify all numbers against `docs/RESULTS.md` and
    `results/publication_metrics.json`.
-7. Generate the PDF from the exact submitted source.
-8. Complete and sign the Contributor Agreement.
-9. Complete the permissions checklist and attach any required permissions or
+3. Complete and sign the Contributor Agreement.
+4. Complete the permissions checklist and attach any required permissions or
    license records.
-10. Submit the source, matching PDF, signed agreement, permissions material,
-    corresponding-author email, and any supplementary material as one package.
+5. Submit the source, matching PDF, signed agreement, permissions material,
+   corresponding-author email, and any supplementary material as one package.
 
 ## Important conclusion
 
-The current paper is scientifically developed but is **not yet ready for final
-IRIS submission** until the template and 10-page requirements are corrected.
+The paper source/PDF format is now aligned with the supplied template and
+10-page requirement. Final submission remains conditional on completing the
+signed Contributor Agreement and the permissions checklist/licence records.

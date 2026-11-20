@@ -1,4 +1,4 @@
-﻿\documentclass[graybox]{svmult}
+﻿\documentclass[graybox,norunningheads]{svmult}
 
 \usepackage[T1]{fontenc}
 \usepackage{mathptmx}
@@ -143,7 +143,7 @@ detector-dependent changes rather than claiming universal failure.
 
 \section{Method}
 
-\subsection{Provenance taxonomy}
+\subsection{Provenance Taxonomy}
 
 We assign every image exactly one of three labels:
 \emph{original} (an authentic photograph as distributed),
@@ -174,7 +174,7 @@ Calibration is measured with expected calibration error over ten equal-width
 confidence bins \cite{guo2017calibration}. All per-class rates carry 95\% confidence
 intervals from 2{,}000 bootstrap resamples over images \cite{efron1993bootstrap}.
 
-\subsection{Splitting rule}
+\subsection{Splitting Rule}
 
 The split is grouped by source photograph. An original and its restoration share a
 group identifier and therefore always land on the same side of the split. Without
@@ -234,7 +234,7 @@ harness from saved predictions rather than entered by hand.
 
 \section{Results}
 
-\subsection{Three-class provenance recovery}
+\subsection{Three-Class Provenance Recovery}
 
 Table~\ref{tab:main} gives the headline numbers.
 
@@ -295,7 +295,7 @@ reported to be ``99\% accurate'' on a balanced binary benchmark says very little
 about how it behaves on an authentic image that has been through a denoiser, because
 that case does not appear in the benchmark.
 
-\subsection{False-generated rate}
+\subsection{False-Generated Rate}
 \label{sec:fpr}
 
 Table~\ref{tab:fpr} gives the false-generated rate for original and restored
@@ -367,7 +367,7 @@ response.
 
 
 
-\subsection{Same-benchmark control}
+\subsection{Same-Benchmark Control}
 
 To test the source-distribution confound, we constructed a separate balanced
 control from the GenImage BigGAN test benchmark: 500 real images, their 500
