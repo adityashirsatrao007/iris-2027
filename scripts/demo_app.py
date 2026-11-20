@@ -7,7 +7,10 @@ by ``scripts/train_probe.py``; CNNSpot is the released, untouched checkpoint.
 from __future__ import annotations
 
 import argparse
+import json
 import sys
+import uuid
+from datetime import datetime, timezone
 from pathlib import Path
 
 import gradio as gr
@@ -41,7 +44,12 @@ def load_cnnspot(path: Path, device: torch.device):
     return model.eval().to(device)
 
 
-def build_app(probe_path: Path, cnnspot_path: Path, device_name: str):
+def build_app(
+    probe_path: Path,
+    cnnspot_path: Path,
+    device_name: str,
+    history_dir: Path,
+):
     device = torch.device(
         "cuda" if device_name == "auto" and torch.cuda.is_available()
         else ("cpu" if device_name == "auto" else device_name)
@@ -70,6 +78,33 @@ def build_app(probe_path: Path, cnnspot_path: Path, device_name: str):
 
     restorer = None
     weights = ROOT / "data" / "weights" / "realesr-general-x4v3.pth"
+    history_dir.mkdir(parents=True, exist_ok=True)
+
+    def history_items():
+        items = []
+        for meta_path in sorted(
+            history_dir.glob("*/metadata.json"), reverse=True
+        ):
+            try:
+                meta = json.loads(meta_path.read_text(encoding="utf-8-sig"))
+                original = meta_path.parent / "original.jpg"
+                restored = meta_path.parent / "restored.jpg"
+                if original.exists() and restored.exists():
+                    items.append(
+                        (
+                            str(original),
+                            f"{meta['timestamp']} — input",
+                        )
+                    )
+                    items.append(
+                        (
+                            str(restored),
+                            f"{meta['timestamp']} — restored",
+                        )
+                    )
+            except (OSError, KeyError, json.JSONDecodeError):
+                continue
+        return items[:20]
 
     def restore(image: Image.Image) -> Image.Image:
         nonlocal restorer
@@ -112,12 +147,37 @@ def build_app(probe_path: Path, cnnspot_path: Path, device_name: str):
             f"{restored_score:.1%}\n"
             f"- **Decision threshold:** 50%\n"
         )
+        record_dir = history_dir / (
+            datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+            + "_"
+            + uuid.uuid4().hex[:8]
+        )
+        record_dir.mkdir(parents=True, exist_ok=True)
+        image.save(record_dir / "original.jpg", quality=95)
+        restored.save(record_dir / "restored.jpg", quality=95)
+        (record_dir / "metadata.json").write_text(
+            json.dumps(
+                {
+                    "timestamp": datetime.now(timezone.utc).isoformat(),
+                    "device": str(device),
+                    "probe": {
+                        label: float(prob)
+                        for label, prob in zip(LABELS, probe_probs)
+                    },
+                    "cnnspot_input": cnn_score,
+                    "cnnspot_restored": restored_score,
+                },
+                indent=2,
+            )
+            + "\n",
+            encoding="utf-8",
+        )
         note = (
             f"### IRIS 27 result\n{probe_text}\n\n### Official CNNSpot score\n"
             f"{detector_text}\n"
             f"_Device: `{device}`. Scores are model outputs, not proof of provenance._"
         )
-        return image, restored, note
+        return image, restored, note, history_items()
 
     with gr.Blocks(title="IRIS 27 — Image Provenance") as demo:
         gr.Markdown(
@@ -133,11 +193,23 @@ def build_app(probe_path: Path, cnnspot_path: Path, device_name: str):
                 original = gr.Image(label="Input")
                 restored_output = gr.Image(label="Real-ESRGAN preview")
         report = gr.Markdown("Upload an image, then click **Analyze image**.")
-        run.click(score, inputs=upload, outputs=[original, restored_output, report])
+        history = gr.Gallery(
+            value=history_items(),
+            label="Analysis history (saved locally)",
+            columns=4,
+            height="auto",
+            object_fit="contain",
+        )
+        run.click(
+            score,
+            inputs=upload,
+            outputs=[original, restored_output, report, history],
+        )
         gr.Markdown(
             "**Research caution:** this interactive view is a qualitative demo. "
             "The paper's measured rates come from the fixed 1,000-image paired "
-            "protocol in `docs/RESULTS.md`, not from this single-image UI."
+            "protocol in `docs/RESULTS.md`, not from this single-image UI. "
+            "Uploaded files remain on this computer in `results/demo_history/`."
         )
     return demo
 
@@ -153,8 +225,14 @@ def main():
     parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--port", type=int, default=7860)
     parser.add_argument("--share", action="store_true")
+    parser.add_argument("--history-dir", default="results/demo_history")
     args = parser.parse_args()
-    app = build_app(ROOT / args.probe, ROOT / args.cnnspot, args.device)
+    app = build_app(
+        ROOT / args.probe,
+        ROOT / args.cnnspot,
+        args.device,
+        ROOT / args.history_dir,
+    )
     app.launch(server_name=args.host, server_port=args.port, share=args.share)
 
 
