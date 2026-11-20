@@ -31,6 +31,22 @@ python scripts/make_report.py --predictions results/probe_128/predictions.csv --
 
 See `docs/DATASETS.md` for licenses, revisions, and limitations.
 
+## Interactive demo
+
+The recommended local presentation demo is a Gradio dashboard. It accepts one
+image, creates a Real-ESRGAN preview, and displays the frozen three-class probe
+alongside the released CNNSpot synthetic probability:
+
+```powershell
+& .\.venv-cuda\Scripts\python.exe -m pip install -r requirements.txt
+.\scripts\launch_demo.ps1 -Device cuda
+```
+
+Open `http://127.0.0.1:7860`. The first analyzed image downloads the official
+Real-ESRGAN weight if it is not already present. Use `-Share` only when a
+temporary public link is needed. This UI is a qualitative demonstration; the
+fixed paired results in `docs/RESULTS.md` remain the authoritative measurements.
+
 ## Models
 
 Two training paths are provided:
@@ -40,8 +56,8 @@ Two training paths are provided:
 
 ## Running on a GPU
 
-This machine has no CUDA device, so all reported numbers come from CPU runs. The
-pipeline is GPU-ready and the same code runs unchanged on a GPU host.
+The project supports CUDA when a compatible NVIDIA driver and CUDA-enabled
+PyTorch are installed. The demo can use the local GPU with `--device cuda`.
 
 Build the uploadable package once:
 
@@ -80,7 +96,7 @@ See `docs/EXPERIMENT_PROTOCOL.md` before collecting paper results. The exact CNN
 ## Results
 
 Pilot results on 3,000 images (1,000 per class) are in [`docs/RESULTS.md`](docs/RESULTS.md).
-Headline numbers, all computed here on CPU:
+Headline numbers for the reproducible 224-pixel probe:
 
 | Input | Accuracy | Macro-F1 | AUROC |
 |---|---|---|---|
@@ -88,8 +104,8 @@ Headline numbers, all computed here on CPU:
 | 224 px | 88.28% | 87.77% | 0.957 |
 
 Unseen-generator mean AUROC: 0.978. The central abstract claim (restoration
-inflating the false-positive rate) is **not** reproduced by this generic
-classifier and still requires the official CNNSpot and UnivFD checkpoints.
+inflating the false-positive rate) is **not** reproduced; see the official
+CNNSpot and UnivFD audit in [`docs/RESULTS.md`](docs/RESULTS.md).
 
 ## Scientific safeguards
 

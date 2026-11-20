@@ -12,6 +12,7 @@ import sys
 import numpy as np
 import pandas as pd
 import torch
+import joblib
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import GroupShuffleSplit
 from torch.utils.data import DataLoader
@@ -75,6 +76,7 @@ np.savez_compressed(out / "features.npz", Xtr=Xtr, ytr=ytr, Xte=Xte, yte=yte)
 
 clf = LogisticRegression(max_iter=a.max_iter, class_weight="balanced", n_jobs=-1)
 clf.fit(Xtr, ytr)
+joblib.dump(clf, out / "classifier.joblib")
 probs = clf.predict_proba(Xte)
 metrics = classification_metrics(yte, probs)
 metrics.update({"backbone": a.backbone, "train_rows": len(train_df), "test_rows": len(val_df),
