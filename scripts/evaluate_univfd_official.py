@@ -24,12 +24,12 @@ from models import get_model  # noqa: E402
 
 
 class PairedImages(Dataset):
-    def __init__(self, original: Path, restored: Path, preprocess):
+    def __init__(self, original: Path, restored: Path, suffix: str, preprocess):
         originals = sorted(original.glob("*.jpg"))
         pairs = [
-            (src, restored / f"{src.stem}__general-x4v3.jpg")
+            (src, restored / f"{src.stem}{suffix}")
             for src in originals
-            if (restored / f"{src.stem}__general-x4v3.jpg").exists()
+            if (restored / f"{src.stem}{suffix}").exists()
         ]
         if not pairs:
             raise RuntimeError("no original/restored pairs found")
@@ -52,6 +52,8 @@ def main() -> None:
         "--model",
         default="data/official_models/univfd_fc_weights.pth",
     )
+    ap.add_argument("--restored-dir", default="data/raw/restored")
+    ap.add_argument("--restored-suffix", default="__general-x4v3.jpg")
     ap.add_argument("--batch-size", type=int, default=8)
     ap.add_argument("--workers", type=int, default=0)
     ap.add_argument("--output", default="results/univfd_official.csv")
@@ -64,7 +66,8 @@ def main() -> None:
     model.eval().to(device)
     data = PairedImages(
         ROOT / "data/raw/original",
-        ROOT / "data/raw/restored",
+        ROOT / args.restored_dir,
+        args.restored_suffix,
         model.preprocess,
     )
     loader = DataLoader(
@@ -77,7 +80,7 @@ def main() -> None:
 
     rows = []
     with torch.inference_mode():
-        for images, paths, conditions in loader:
+        for batch_index, (images, paths, conditions) in enumerate(loader, 1):
             scores = model(images.to(device)).sigmoid().flatten().cpu().numpy()
             rows.extend(
                 {
@@ -88,6 +91,12 @@ def main() -> None:
                 }
                 for path, condition, score in zip(paths, conditions, scores)
             )
+            if batch_index == 1 or batch_index % 25 == 0:
+                print(
+                    f"processed {min(batch_index * args.batch_size, len(data))}/"
+                    f"{len(data)} images",
+                    flush=True,
+                )
 
     out = ROOT / args.output
     out.parent.mkdir(parents=True, exist_ok=True)

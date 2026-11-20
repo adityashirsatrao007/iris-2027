@@ -103,11 +103,10 @@ must be established per deployed model, not inferred from the existence of
 restoration.
 \end{enumerate}
 
-We are explicit about what we did not run. No official CNNSpot or UnivFD checkpoint
-was executed in this environment, so no claim in this paper is a reproduction or a
-refutation of a published false-positive number; our negative result concerns our
-own probe only. We return to this point in Section~\ref{sec:threats}, because it
-determines how the results may be used.
+We also audit the motivating claim with the released CNNSpot and UnivFD checkpoints.
+Those runs show a smaller and detector-dependent increase, not the abstract's
+reported 15.90\% or 5.20\% values. We therefore do not present this study as an
+exact reproduction of those numbers.
 
 \section{Related Work}
 
@@ -348,12 +347,33 @@ restorations, with 96.60\% true positives on held-out generated images and AUROC
 0.997.
 
 We state the scope of this finding precisely. It is a property of a frozen
-ImageNet ResNet-50 probe, and it says nothing about CNNSpot or UnivFD, whose
-false-positive behaviour on restored photographs we did not measure and cannot
-report. What it does establish is that restoration is not universally
-detector-poisoning. The effect depends on the detector, and a claim of the form
+ImageNet ResNet-50 probe. The official-detector audit below shows why this
+qualification matters: restoration is not universally detector-poisoning. The effect
+depends on the detector, and a claim of the form
 ``restoration raises the false-positive rate from $x$ to $y$'' is meaningless
 without naming the model, the threshold, and the restorer.
+
+\begin{table}[t]
+\centering
+\caption{Official detector audit at threshold 0.5 on 1,000 paired images.}
+\label{tab:official}
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Detector and restorer & Original & Restored \\
+\midrule
+CNNSpot (0.5), Real-ESRGAN & 0.30\% & 0.20\% \\
+CNNSpot (0.5), Restormer & 0.30\% & 0.30\% \\
+CNNSpot (0.1), Real-ESRGAN & 1.20\% & 0.90\% \\
+CNNSpot (0.1), Restormer & 1.20\% & 1.70\% \\
+UnivFD, Real-ESRGAN & 0.60\% & 1.60\% \\
+UnivFD, Restormer & 0.60\% & 1.60\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The official runs do not reproduce the abstract's 15.90\% super-resolution or
+5.20\% denoising rates. UnivFD rises from 0.60\% to 1.60\% for both restorers;
+CNNSpot's released variants range from decreases to a 1.20\%--1.70\% rate.
 
 \subsection{Generalisation to an unseen generator family}
 
@@ -399,9 +419,11 @@ both sides are the same photograph; we therefore weight it more heavily in our
 conclusions. Removing the confound properly requires GenImage's matched real split or
 a second authentic source drawn from the same distribution, which we did not run.
 
-\paragraph{Detectors not executed.} CNNSpot and UnivFD were not run. No number in
-this paper reproduces, confirms, or refutes a published false-positive rate, and none
-should be cited as if it did. Our negative result is about our own probe.
+\paragraph{Detector checkpoint scope.} We ran the released CNNSpot Blur+JPEG(0.5)
+and Blur+JPEG(0.1) checkpoints and the released UnivFD CLIP ViT-L/14 checkpoint.
+Their results are an audit on this corpus, not an exact reproduction of the
+abstract's rates: checkpoint version, preprocessing, corpus composition, and
+restorer implementation all affect the measured false-positive rate.
 
 \paragraph{One restorer per family.} Real-ESRGAN is the only super-resolution
 operator and Restormer the only denoiser. We did not complete leave-one-restorer-out

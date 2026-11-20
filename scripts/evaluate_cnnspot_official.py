@@ -26,11 +26,11 @@ from networks.resnet import resnet50  # noqa: E402
 
 
 class PairedImages(Dataset):
-    def __init__(self, original: Path, restored: Path):
+    def __init__(self, original: Path, restored: Path, suffix: str):
         originals = sorted(original.glob("*.jpg"))
         pairs = []
         for src in originals:
-            dst = restored / f"{src.stem}__general-x4v3.jpg"
+            dst = restored / f"{src.stem}{suffix}"
             if dst.exists():
                 pairs.append((src, dst))
         if not pairs:
@@ -63,6 +63,8 @@ def main() -> None:
         "--model",
         default="data/official_models/cnnspot_blur_jpg_prob0.5.pth",
     )
+    ap.add_argument("--restored-dir", default="data/raw/restored")
+    ap.add_argument("--restored-suffix", default="__general-x4v3.jpg")
     ap.add_argument("--batch-size", type=int, default=16)
     ap.add_argument("--workers", type=int, default=0)
     ap.add_argument("--output", default="results/cnnspot_official.csv")
@@ -73,7 +75,11 @@ def main() -> None:
     state = torch.load(args.model, map_location="cpu")
     model.load_state_dict(state["model"])
     model.eval().to(device)
-    data = PairedImages(ROOT / "data/raw/original", ROOT / "data/raw/restored")
+    data = PairedImages(
+        ROOT / "data/raw/original",
+        ROOT / args.restored_dir,
+        args.restored_suffix,
+    )
     loader = DataLoader(
         data,
         batch_size=args.batch_size,
