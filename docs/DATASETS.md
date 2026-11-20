@@ -51,3 +51,25 @@ Citation:
 - Keep at least one generator family out of training for the cross-generator
   result.
 - Record the dataset revision or export date next to every result.
+
+## Same-benchmark control extension
+
+The repository also provides `scripts/prepare_genimage_matched.py`. It streams
+the `nebula/GenImage-arrow` `biggan-test` split and exports an equal number of
+real and generated images from the same benchmark. The public Arrow release
+does not expose a reliable pixel-pair identifier, so this is a
+same-benchmark/distribution control, **not an exact source-paired dataset**.
+It checks whether replacing COCO real images changes the result, but it does
+not remove every possible content or class confound.
+
+Example:
+
+```powershell
+python scripts/prepare_genimage_matched.py `
+  --pairs 500 `
+  --output data/matched_genimage
+```
+
+This extension is derived from the GenImage release and is subject to its
+CC-BY-NC-SA-4.0 and dataset-specific non-commercial terms. Do not commit the
+exported images to Git.

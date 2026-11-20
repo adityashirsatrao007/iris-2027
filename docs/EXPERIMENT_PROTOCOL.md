@@ -19,4 +19,30 @@ reports Wilson intervals for FPR at 1%, 5%, 10%, and 50%, plus a paired
 bootstrap interval for the mean score change. This prevents a single
 threshold from hiding operating-point dependence.
 
+## Same-benchmark control run
+
+To address part of the primary content confound, create a balanced GenImage
+real/fake subset:
+
+```powershell
+python scripts/prepare_genimage_matched.py --pairs 500
+python scripts/restore_images.py `
+  --input data/matched_genimage/original `
+  --output data/matched_genimage/restored `
+  --device cuda
+python scripts/make_manifest.py `
+  --input data/matched_genimage `
+  --output data/matched_genimage/manifest.csv
+```
+
+Train and evaluate the same binary probe on this manifest, and compare against
+the COCO/GenImage result. Keep this control separate from the headline result:
+the released data are balanced by benchmark but are not exact real/fake source
+pairs.
+
+For deployment-style transformations, generate JPEG and resize controls with
+`scripts/make_postprocessing_variants.py`, then run the official evaluators
+against each variant directory. These controls must be reported separately
+from learned restoration because they are not restoration models.
+
 Springer reviewers will expect the command, seed, Python/PyTorch versions, checkpoint hashes, image manifest, and hardware to be saved with the results.

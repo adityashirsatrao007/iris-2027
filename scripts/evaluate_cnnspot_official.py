@@ -65,6 +65,7 @@ def main() -> None:
     )
     ap.add_argument("--restored-dir", default="data/raw/restored")
     ap.add_argument("--restored-suffix", default="__general-x4v3.jpg")
+    ap.add_argument("--original-dir", default="data/raw/original")
     ap.add_argument("--batch-size", type=int, default=16)
     ap.add_argument("--workers", type=int, default=0)
     ap.add_argument("--output", default="results/cnnspot_official.csv")
@@ -76,7 +77,7 @@ def main() -> None:
     model.load_state_dict(state["model"])
     model.eval().to(device)
     data = PairedImages(
-        ROOT / "data/raw/original",
+        ROOT / args.original_dir,
         ROOT / args.restored_dir,
         args.restored_suffix,
     )
