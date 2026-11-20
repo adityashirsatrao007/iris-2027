@@ -1,6 +1,10 @@
-\documentclass[runningheads]{llncs}
+﻿\documentclass[graybox]{svmult}
 
 \usepackage[T1]{fontenc}
+\usepackage{mathptmx}
+\usepackage{helvet}
+\usepackage{courier}
+\usepackage{cite}
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{amsmath}
@@ -11,18 +15,11 @@
 \newcommand{\best}[1]{\textbf{#1}}
 
 \begin{document}
-
-\title{Original, Restored, or Generated:\\Restoration as an Unmodelled Provenance State}
-\titlerunning{Original, Restored, or Generated}
-
-\author{Aditya Vishal Shirsatrao\inst{1}\thanks{Corresponding author: adityashirsatrao007@gmail.com}}
-\institute{N. K. Orchid College of Engineering \& Technology, Solapur, India
-\email{adityashirsatrao007@gmail.com}}
-
+\title*{Original, Restored, or Generated:\\Restoration as an Unmodelled Provenance State}
+\author{Aditya Vishal Shirsatrao}
+\institute{N. K. Orchid College of Engineering \& Technology, Solapur, India\email{adityashirsatrao007@gmail.com}}
 \maketitle
-
-\begin{abstract}
-Image provenance classifiers are trained and deployed as binary devices: an image
+\abstract*{Image provenance classifiers are trained and deployed as binary devices: an image
 is either an authentic photograph or a synthetic one. Consumer camera pipelines and
 photo editors now apply learned restoration models to authentic photographs before
 they are published, and these operators rewrite the very low-level statistics that
@@ -45,12 +42,31 @@ forensic detectors should be read: a generic ResNet-50 probe trained in this stu
 does not exhibit it, flagging 1.28\% of pristine and 0.85\% of restored authentic
 images as generated. The inflation is therefore a property of specific deployed
 detectors, not of detection in general, and must be measured per detector rather
-than assumed.
-
-\keywords{image provenance \and AI-generated image detection \and image restoration
-\and false positives \and evaluation}
-\end{abstract}
-
+than assumed.}
+\abstract{Image provenance classifiers are trained and deployed as binary devices: an image
+is either an authentic photograph or a synthetic one. Consumer camera pipelines and
+photo editors now apply learned restoration models to authentic photographs before
+they are published, and these operators rewrite the very low-level statistics that
+detectors rely on. We ask what a modern detector does when an authentic photograph
+has passed through a learned restorer, and we formulate provenance as a three-class
+problem --- \emph{original}, \emph{restored}, \emph{generated} --- rather than a
+binary one. On 3{,}000 images (1{,}000 COCO photographs, their Real-ESRGAN
+restorations, and 1{,}000 GenImage samples from four generator families) we train a
+frozen ResNet-50 feature extractor with a linear head and report source-disjoint
+results. Across three seeds, three-class accuracy is 86.66$\pm$1.45\% with
+macro-AUROC 0.956$\pm$0.004 at 224\,px input and 82.29\% with macro-AUROC
+0.926 at the resolution-matched 128\,px setting. The
+confusion is overwhelmingly between original and restored (81 of 468 authentic
+images), while generated images are almost perfectly separated (99.25\% recall), and
+restoration is itself detectable against its own source photograph at AUROC 0.889.
+Real-versus-generated classifiers transfer to unseen generator families with a mean
+AUROC of 0.978, but GLIDE transfers markedly worse (0.932). We also report a
+negative result that constrains how the reported false-positive inflation of
+forensic detectors should be read: a generic ResNet-50 probe trained in this study
+does not exhibit it, flagging 1.28\% of pristine and 0.85\% of restored authentic
+images as generated. The inflation is therefore a property of specific deployed
+detectors, not of detection in general, and must be measured per detector rather
+than assumed.}
 \section{Introduction}
 
 Detectors of AI-generated imagery are evaluated, and usually deployed, as binary
@@ -112,44 +128,17 @@ exact reproduction of those numbers.
 
 \section{Related Work}
 
-\subsection{Detectors of generated images}
-
-Wang et al.\ showed that a standard image classifier trained on one GAN's outputs
-detects other GANs surprisingly well, while remaining brittle to post-processing
-\cite{wang2020cnnspot}. Ojha et al.\ replaced the task-specific classifier with a
-frozen CLIP feature space and a nearest-neighbour head, obtaining much better
-transfer to unseen generators \cite{ojha2023univfd}. Frequency analysis established
-that upsampling leaves systematic spectral traces \cite{frank2020frequency}, and
-diffusion models were subsequently shown to leave their own, different
-fingerprints \cite{corvi2023diffusion,wang2023dire}. The common thread is that
-detectors key on the generative process, which is precisely what restoration
-overwrites.
-
-Robustness work has mostly studied compression and adversarial perturbation, for
-example attacks that evade detectors with small, imperceptible changes
-\cite{carlini2020evading}. Ordinary, non-adversarial enhancement is a different
-threat model: nobody is attacking the detector, and the operator is applied for the
-benefit of the image.
-
-\subsection{Restoration operators}
-
-We use two representative families. Real-ESRGAN performs blind super-resolution
-with a high-order degradation model and is trained with a GAN loss, so its outputs
-carry generated high-frequency texture \cite{wang2021realesrgan}. Restormer is a
-transformer for restoration whose real-denoising variant removes sensor and
-compression noise without changing resolution \cite{zamir2022restormer}. Both are
-same-purpose, publicly released, and widely deployed; SwinIR, SCUNet, and NAFNet
-occupy the same role \cite{liang2021swinir,zhang2023scunet,chen2022nafnet}. Older
-discriminative denoisers such as DnCNN \cite{zhang2017dncnn} are the limiting case
-in which restoration leaves the smoothest residual.
-
-\subsection{What is missing}
-
-Benchmarks supply real and fake images and often test generic degradation
-\cite{zhu2023genimage}; recent transformation-based detectors use restoration
-as a probe for binary detection. We instead ask what happens when an authentic
-photograph itself passes through a learned restorer, keeping the copy tied to
-its source and measuring false flags by released binary detectors.
+Released detectors such as CNNSpot and UnivFD use low-level image statistics and
+cross-generator features to distinguish authentic from generated images
+\cite{wang2020cnnspot,ojha2023univfd}. Benchmarks such as GenImage evaluate
+generator transfer and generic degradation \cite{zhu2023genimage}. Restoration
+models rewrite the same signal through denoising, enhancement, or
+super-resolution \cite{wang2021realesrgan,zamir2022restormer}. Recent
+transformation-based detectors use these operators to improve binary detection;
+our question is different: whether an authentic restored photograph should be
+treated as a separate provenance state and whether released detectors falsely
+flag it. We therefore use source-paired original/restored images and report
+detector-dependent changes rather than claiming universal failure.
 
 \section{Method}
 
@@ -237,11 +226,10 @@ the other.
 
 \subsection{Implementation}
 
-The final restoration and official-detector experiments run on CUDA with an NVIDIA
-GeForce GTX 1650 Ti; the frozen-probe sensitivity runs use the same CUDA-capable
-environment with PyTorch \cite{paszke2019pytorch}. Seeds are fixed, and every number
-in this paper is written by the harness from saved prediction files rather than typed
-by hand.
+The final restoration and official-detector experiments use CUDA on an NVIDIA
+GeForce GTX 1650 Ti. Probe seeds and checkpoint paths are recorded with the
+prediction files. Every reported number is regenerated by the repository
+harness from saved predictions rather than entered by hand.
 
 \section{Results}
 
@@ -273,13 +261,7 @@ so provenance is recoverable in the three-class formulation.
 Table~\ref{tab:perclass} shows where the errors are, and Fig.~\ref{fig:cm} shows the
 same information as a matrix.
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.56\textwidth]{figures/fig_probe_roc.png}
-\caption{One-vs-rest ROC curves for the 224-pixel probe. The generated class is
-easier to separate than the original/restored provenance states.}
-\label{fig:probe_roc}
-\end{figure}
+
 
 \begin{table}[t]
 \centering
@@ -315,9 +297,8 @@ that case does not appear in the benchmark.
 \subsection{False-generated rate}
 \label{sec:fpr}
 
-Fig.~\ref{fig:fpr} plots the false-generated rate for original and restored
-authentic images across the threshold range, and Table~\ref{tab:fpr} gives the
-values at the conventional 0.5 operating point.
+Table~\ref{tab:fpr} gives the false-generated rate for original and restored
+authentic images at the conventional 0.5 operating point.
 
 \begin{table}[t]
 \centering
@@ -336,14 +317,7 @@ Input & Condition & $n$ & Flagged as generated \\
 \end{tabular}
 \end{table}
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.52\textwidth]{figures/fig_fpr_threshold.png}
-\caption{False-generated rate against the decision threshold at
-$224\times224$. The restored curve lies below the original curve over the entire
-range, so the ordering is not an artefact of the 0.5 operating point.}
-\label{fig:fpr}
-\end{figure}
+
 
 Restoration does not increase the false-generated rate for this classifier. It
 slightly decreases it, and the ordering holds across thresholds rather than only at
@@ -382,29 +356,15 @@ The official runs do not reproduce the abstract's 15.90\% super-resolution or
 5.20\% denoising rates. UnivFD rises from 0.60\% to 1.60\% for both restorers;
 CNNSpot's released variants range from decreases to a 1.20\%--1.70\% rate.
 
-Figure~\ref{fig:detector_delta} shows the paired score changes rather than only
-the thresholded rates. The intervals include zero for the two CNNSpot 0.5 audits,
-whereas the UnivFD changes are positive on this corpus. This distinction matters:
-a threshold crossing count alone cannot describe the magnitude or uncertainty of
-the detector response.
+The saved paired-score analysis also reports mean changes and bootstrap intervals,
+not only thresholded rates. The intervals include zero for the two CNNSpot 0.5
+audits, whereas the UnivFD changes are positive on this corpus. A threshold
+crossing count alone cannot describe the magnitude or uncertainty of the detector
+response.
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.92\textwidth]{figures/fig_detector_delta.png}
-\caption{Paired mean change in synthetic probability after restoration. Error bars
-are 95\% paired bootstrap intervals over source images. Positive values indicate
-that the restored image receives a higher synthetic score.}
-\label{fig:detector_delta}
-\end{figure}
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.82\textwidth]{figures/fig_detector_threshold_delta.png}
-\caption{Change in the flagged rate over decision thresholds for the primary
-detector/restorer audits. The zero line indicates no change from original to
-restored.}
-\label{fig:detector_threshold}
-\end{figure}
+
+
 
 \subsection{Same-benchmark control}
 
@@ -424,37 +384,13 @@ On the same control pairs, CNNSpot's 0.5-threshold rate changed from 0.40\% to
 source images and are reported as a control analysis, not as a replacement for
 the 1,000-image primary audit.
 
-\subsection{Generalisation to an unseen generator family}
+\subsection{Generalisation beyond the primary generators}
 
-We hold out one generator family entirely and train a binary real-versus-generated
-classifier on the remaining three families plus authentic images.
-Table~\ref{tab:unseen} gives the result.
-
-\begin{table}[t]
-\centering
-\caption{Real vs.\ generated with one family unseen, $128\times128$.}
-\label{tab:unseen}
-\begin{tabular}{@{}lrr@{}}
-\toprule
-Unseen family & Accuracy & AUROC \\
-\midrule
-BigGAN & 98.27\% & 0.999 \\
-VQDM   & 98.40\% & 0.998 \\
-GLIDE  & \best{80.27\%} & \best{0.932} \\
-ADM    & 88.00\% & 0.982 \\
-\midrule
-Mean AUROC & & 0.978 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-The mean of 0.978 is high, but the variance is the point. Two families transfer
-above 0.998 and one drops to 0.932, a gap of six to seven accuracy points. GLIDE is
-a text-guided diffusion model whose outputs differ in composition and texture
-statistics from the GAN and quantised-diffusion families, and its lower transfer
-matches the known difficulty of cross-family diffusion detection
-\cite{corvi2023diffusion,ojha2023univfd}. Reporting the mean alone would present a
-homogeneous capability that does not exist.
+The saved protocol results also include a leave-one-generator-family-out audit.
+Its mean AUROC is 0.978, with GLIDE the hardest held-out family (0.932). The
+full per-family table and figure are retained in the repository as supplementary
+reproducibility material; the main paper focuses on the restoration audit and
+its matched-benchmark control.
 
 \section{Threats to Validity}
 \label{sec:threats}
@@ -509,7 +445,7 @@ every number and figure in this paper are included with the submission. The pipe
 rebuilds the corpus from public sources and retrains from scratch with fixed seeds;
 no reported value is entered by hand.
 
-\bibliographystyle{splncs04}
+\bibliographystyle{spmpsci}
 \bibliography{refs}
 
 \end{document}

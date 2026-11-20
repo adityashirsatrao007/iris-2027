@@ -1,12 +1,26 @@
-﻿# IRIS 2027 final-paper package
+# IRIS 2027 final-paper package
 
-Included: main.tex, main.pdf, main.bbl, refs.bib, llncs.cls, splncs04.bst, figures/, and blank Springer forms in forms/.
+This package uses the Springer `svmult` proceedings class required by the IRIS
+2027 author guideline and compiles to exactly 10 pages.
 
-Before submission:
-1. Confirm the class with IRIS organizers. Their instructions say to use the electrical-engineering proceedings package rather than the LNCS/CS package; no IRIS-specific class was present in Downloads.
-2. Complete and sign forms/Contributor Agreement.docx.
-3. Attach permissions/releases for third-party material if applicable.
-4. Verify the author list and corresponding-author details against the submission record.
-5. Do not submit the blank forms unchanged.
+## Author files
 
-Verified: Aditya Vishal Shirsatrao; N. K. Orchid College of Engineering & Technology, Solapur, India; adityashirsatrao007@gmail.com; 10-page PDF; clean Tectonic compilation; no undefined references.
+- `main.tex` — authoritative manuscript source
+- `main.bbl` — generated bibliography required by Springer
+- `refs.bib` — bibliography database
+- `svmult.cls` — Springer proceedings class
+- `spmpsci.bst` — Springer proceedings bibliography style
+- `figures/` — figures referenced by `main.tex`
+- `main.pdf` — PDF compiled from the submitted `main.tex`
+
+## Forms
+
+The `forms/` directory contains the supplied blank Contributor Agreement,
+Permission, and Release templates. The Contributor Agreement must be completed
+and signed by the corresponding author before submission. Complete permissions
+forms only where applicable, and include the Springer Permissions Checklist if
+required by the organizers.
+
+The editable humanized DOCX is retained separately at
+`paper/iris-27-paper.docx`; the authoritative submission source is the LaTeX
+package above so that the PDF and source match exactly.

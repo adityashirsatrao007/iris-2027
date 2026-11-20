@@ -6,25 +6,23 @@
 
 ## Executive result
 
-The current research content is substantially complete, but the current package
-is **not yet submission-compliant**. The two blocking issues are:
+The research content is substantially complete. After the format correction, the
+paper source and PDF are now aligned with the two main format requirements. The
+remaining blockers are the signed/legal submission materials.
 
-1. The current LaTeX PDF is **12 pages**, while IRIS requires **10 pages exactly**.
-2. The current LaTeX source uses the `llncs` class, while the IRIS guideline
-   explicitly requires the Springer full-paper proceedings package for electrical
-   engineering, physics, mathematics, and related fields, and says not to use
-   the Computer Science LNCS package.
-
-Do not submit the current 12-page LNCS PDF as the final IRIS package.
+The final LaTeX package now uses `svmult`, contains the required supporting
+files, and compiles to exactly 10 pages. The humanized DOCX remains available as
+an editable working copy, but the official submission package uses the matching
+LaTeX source and PDF so the source/PDF pair is authoritative.
 
 ## Requirement-by-requirement status
 
 | Requirement | Status | Action |
 |---|---|---|
-| Exactly 10 pages | **FAIL** | Re-typeset and reduce the paper to 10 pages |
-| Official electrical-engineering proceedings template | **FAIL** | Obtain and use the IRIS/Springer proceedings template, not `llncs` |
+| Exactly 10 pages | PASS | `paper/main.pdf` and submission PDF are 10 pages |
+| Official electrical-engineering proceedings template | PASS | Submission uses Springer `svmult`, not `llncs` |
 | American English | PASS with editorial review | Perform final language review |
-| No page numbers/running heads | **FAIL/PENDING** | Remove `\\titlerunning`; let Springer add running heads |
+| No page numbers/running heads | PASS | `\\titlerunning` removed from submission source |
 | Full author name | PASS | Verify spelling against agreement |
 | City and country in affiliation | PASS | Current affiliation says Solapur, India |
 | Corresponding-author email | PASS | `adityashirsatrao007@gmail.com` is present |
@@ -36,7 +34,7 @@ Do not submit the current 12-page LNCS PDF as the final IRIS package.
 | Editable Word equations | **PENDING** | DOCX conversion must be checked; equations should be Word Math/MathType objects |
 | Numeric square-bracket citations | PASS in LaTeX | `llncs` currently produces numeric citations; verify in final template |
 | DOI inclusion | REVIEW | Add DOI values where available |
-| Final source files and PDF match | **FAIL/PENDING** | Generate the final PDF from the same official Word or LaTeX source submitted |
+| Final source files and PDF match | PASS | Submission PDF is compiled from submitted `main.tex` |
 | Signed Contributor Agreement | **PENDING** | Complete and sign the supplied form |
 | Permissions checklist | **MISSING** | Obtain/complete the Springer checklist or document why no permission is required |
 | Third-party permissions | REVIEW | Document COCO, GenImage, and model/checkpoint licenses |
