@@ -22,4 +22,5 @@ paper/*.log
 tools/colab/target.json
 !paper/main.bbl
 external/
+tools/Turnitout-Humanizer/
 data/official_models/
